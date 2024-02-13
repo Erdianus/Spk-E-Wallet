@@ -1,7 +1,7 @@
 <?php
 
 use App\Http\Controllers\AlternatifController;
-use App\Http\Controllers\BobotController;
+use App\Http\Controllers\KriteriaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('dashboard');
+    return view('layouts.app');
 })->name('dashboard');
 Route::prefix('alternatif')->group(function () {
     Route::get('/index', [AlternatifController::class, 'index'])->name('alternatif.index');
@@ -27,12 +27,12 @@ Route::prefix('alternatif')->group(function () {
     Route::put('/update/{id}', [AlternatifController::class, 'update']);
     Route::delete('/delete/{id}', [AlternatifController::class, 'destroy']);
 });
-Route::prefix('bobot')->group(function () {
-    Route::get('/index', [BobotController::class, 'index'])->name('bobot.index');
-    Route::get('/show/{id}', [BobotController::class, 'show']);
-    Route::get('/create', [BobotController::class, 'create']);
-    Route::post('/store', [BobotController::class, 'store']);
-    Route::get('/edit/{id}', [BobotController::class, 'edit']);
-    Route::put('/update/{id}', [BobotController::class, 'update']);
-    Route::delete('/delete/{id}', [BobotController::class, 'destroy']);
+Route::prefix('kriteria')->group(function () {
+    Route::get('/index', [KriteriaController::class, 'index'])->name('kriteria.index');
+    Route::get('/show/{id}', [KriteriaController::class, 'show']);
+    Route::get('/create', [KriteriaController::class, 'create']);
+    Route::post('/store', [KriteriaController::class, 'store']);
+    Route::get('/edit/{id}', [KriteriaController::class, 'edit']);
+    Route::put('/update/{id}', [KriteriaController::class, 'update']);
+    Route::delete('/delete/{id}', [KriteriaController::class, 'destroy']);
 });

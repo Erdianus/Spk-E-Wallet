@@ -2,267 +2,81 @@
 @section('title')
     Dashboard
 @endsection
+@section('style')
+    <style>
+        /* Customize sidebar width */
+        .sidebar {
+            min-width: 250px;
+            height: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+            background-color: #343a40;
+            padding-top: 60px;
+            /* Adjust according to your needs */
+        }
+
+        /* Sidebar links */
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            color: #ffffff;
+            display: block;
+            transition: all 0.3s;
+        }
+
+        /* Sidebar links on hover */
+        .sidebar a:hover {
+            background-color: #454d55;
+        }
+
+        /* Responsive styles */
+        @media (max-width: 991.98px) {
+            .sidebar {
+                width: 250px;
+                left: -250px;
+                transition: all 0.3s;
+            }
+
+            .sidebar.show {
+                left: 0;
+            }
+
+            .toggle-sidebar {
+                display: block;
+            }
+        }
+
+        @media (min-width: 992px) {
+            .toggle-sidebar {
+                display: none;
+            }
+        }
+    </style>
+@endsection
 @section('page')
     Dashboard
 @endsection
 @section('content-page')
-    <div class="card">
-        <div class="card-header pb-0">
-            <h6>Data Alternatif E-Wallet</h6>
+    <div class="row justify-content-start mt-4 mb-5">
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Data Alternatif</h5>
+                    <p class="card-text">(Total data alternatif)</p>
+                    <a href="{{ route('alternatif.index') }}" class="btn btn-primary">Lihat Data</a>
+                </div>
+            </div>
         </div>
-        <div class="table-responsive">
-            <table class="table align-items-center mb-0">
-                <thead>
-                    <tr>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Project</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Budget</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Status</th>
-                        <th class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">Completion</th>
-                        <th></th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <div class="d-flex px-2">
-                                <div>
-                                    <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/logos/small-logos/logo-spotify.svg"
-                                        class="avatar avatar-sm rounded-circle me-2">
-                                </div>
-                                <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">Spotify</h6>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="text-xs font-weight-bold mb-0">$2,500</p>
-                        </td>
-                        <td>
-                            <span class="badge badge-dot me-4">
-                                <i class="bg-info"></i>
-                                <span class="text-dark text-xs">working</span>
-                            </span>
-                        </td>
-                        <td class="align-middle text-center">
-                            <div class="d-flex align-items-center">
-                                <span class="me-2 text-xs">60%</span>
-                                <div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="60"
-                                            aria-valuemin="0" aria-valuemax="100" style="width: 60%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0">
-                                <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="d-flex px-2">
-                                <div>
-                                    <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/logos/small-logos/logo-invision.svg"
-                                        class="avatar avatar-sm rounded-circle me-2">
-                                </div>
-                                <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">Invision</h6>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="text-xs font-weight-bold mb-0">$5,000</p>
-                        </td>
-                        <td>
-                            <span class="badge badge-dot me-4">
-                                <i class="bg-success"></i>
-                                <span class="text-dark text-xs">done</span>
-                            </span>
-                        </td>
-                        <td class="align-middle text-center">
-                            <div class="d-flex align-items-center">
-                                <span class="me-2 text-xs">100%</span>
-                                <div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100"
-                                            aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="d-flex px-2">
-                                <div>
-                                    <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/logos/small-logos/logo-jira.svg"
-                                        class="avatar avatar-sm rounded-circle me-2">
-                                </div>
-                                <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">Jira</h6>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="text-xs font-weight-bold mb-0">$3,400</p>
-                        </td>
-                        <td>
-                            <span class="badge badge-dot me-4">
-                                <i class="bg-danger"></i>
-                                <span class="text-dark text-xs">canceled</span>
-                            </span>
-                        </td>
-                        <td class="align-middle text-center">
-                            <div class="d-flex align-items-center">
-                                <span class="me-2 text-xs">30%</span>
-                                <div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-danger" role="progressbar" aria-valuenow="30"
-                                            aria-valuemin="0" aria-valuemax="30" style="width: 30%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="d-flex px-2">
-                                <div>
-                                    <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/logos/small-logos/logo-slack.svg"
-                                        class="avatar avatar-sm rounded-circle me-2">
-                                </div>
-                                <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">Slack</h6>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="text-xs font-weight-bold mb-0">$1,000</p>
-                        </td>
-                        <td>
-                            <span class="badge badge-dot me-4">
-                                <i class="bg-danger"></i>
-                                <span class="text-dark text-xs">canceled</span>
-                            </span>
-                        </td>
-                        <td class="align-middle text-center">
-                            <div class="d-flex align-items-center">
-                                <span class="me-2 text-xs">0%</span>
-                                <div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="0"
-                                            aria-valuemin="0" aria-valuemax="0" style="width: 0%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="d-flex px-2">
-                                <div>
-                                    <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/logos/small-logos/logo-webdev.svg"
-                                        class="avatar avatar-sm rounded-circle me-2">
-                                </div>
-                                <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">Webdev</h6>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="text-xs font-weight-bold mb-0">$14,000</p>
-                        </td>
-                        <td>
-                            <span class="badge badge-dot me-4">
-                                <i class="bg-info"></i>
-                                <span class="text-dark text-xs">working</span>
-                            </span>
-                        </td>
-                        <td class="align-middle text-center">
-                            <div class="d-flex align-items-center">
-                                <span class="me-2 text-xs">80%</span>
-                                <div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-info" role="progressbar" aria-valuenow="80"
-                                            aria-valuemin="0" aria-valuemax="80" style="width: 80%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-
-                    <tr>
-                        <td>
-                            <div class="d-flex px-2">
-                                <div>
-                                    <img src="https://demos.creative-tim.com/soft-ui-design-system-pro/assets/img/logos/small-logos/logo-xd.svg"
-                                        class="avatar avatar-sm rounded-circle me-2">
-                                </div>
-                                <div class="my-auto">
-                                    <h6 class="mb-0 text-xs">Adobe XD</h6>
-                                </div>
-                            </div>
-                        </td>
-                        <td>
-                            <p class="text-xs font-weight-bold mb-0">$2,300</p>
-                        </td>
-                        <td>
-                            <span class="badge badge-dot me-4">
-                                <i class="bg-success"></i>
-                                <span class="text-dark text-xs">done</span>
-                            </span>
-                        </td>
-                        <td class="align-middle text-center">
-                            <div class="d-flex align-items-center">
-                                <span class="me-2 text-xs">100%</span>
-                                <div>
-                                    <div class="progress">
-                                        <div class="progress-bar bg-success" role="progressbar" aria-valuenow="100"
-                                            aria-valuemin="0" aria-valuemax="100" style="width: 100%;"></div>
-                                    </div>
-                                </div>
-                            </div>
-                        </td>
-
-                        <td class="align-middle">
-                            <button class="btn btn-link text-secondary mb-0" aria-haspopup="true" aria-expanded="false">
-                                <i class="fa fa-ellipsis-v text-xs" aria-hidden="true"></i>
-                            </button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="col-3">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Kriteria</h5>
+                    <p class="card-text">(Total data kriteria)</p>
+                    <a href="{{ route('kriteria.index') }}" class="btn btn-primary">Lihat Data</a>
+                </div>
+            </div>
         </div>
     </div>
 @endsection

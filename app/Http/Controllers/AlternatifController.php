@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Alternatif;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class AlternatifController extends Controller
 {
@@ -23,7 +26,7 @@ class AlternatifController extends Controller
      */
     public function create()
     {
-        //
+        return view('alternatif.create');
     }
 
     /**
@@ -34,7 +37,28 @@ class AlternatifController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'nama' => 'required|string',
+            'kode' => 'required|string',
+        ]);
+        DB::beginTransaction();
+        try {
+            Alternatif::create([
+                'nama' => $request->nama,
+                'kode' => $request->kode,
+            ]);
+            DB::commit();
+            return response()->json([
+                'message' => 'Alternatif Berhasil Dibuat',
+                'status' => 200
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Alternatif Gagal Dibuat',
+                'status' => 500
+            ]);
+        }
     }
 
     /**
@@ -45,7 +69,8 @@ class AlternatifController extends Controller
      */
     public function show($id)
     {
-        //
+        $alternatif = Alternatif::findOrFail($id);
+        return view('alternatif.show', compact('alternatif'));
     }
 
     /**
@@ -56,7 +81,8 @@ class AlternatifController extends Controller
      */
     public function edit($id)
     {
-        //
+        $alternatif = Alternatif::findOrFail($id);
+        return view('alternatif.', compact('alternatif'));
     }
 
     /**
@@ -68,7 +94,29 @@ class AlternatifController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'nama' => 'string',
+            'kode' => 'string',
+        ]);
+        DB::beginTransaction();
+        try {
+            $alternatif = Alternatif::findOrFail($id);
+            $alternatif->update([
+                'nama' => $request->nama,
+                'kode' => $request->kode,
+            ]);
+            DB::commit();
+            return response()->json([
+                'message' => 'Alternatif Berhasil Diupdate',
+                'status' => 200
+            ]);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Alternatif Gagal Diupdate',
+                'status' => 500
+            ]);
+        }
     }
 
     /**
@@ -79,6 +127,11 @@ class AlternatifController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $alternatif = Alternatif::findOrFail($id);
+        $alternatif->delete();
+        return response()->json([
+            'message' => 'Alternatif Berhasil Dihapus',
+            'status' => 200
+        ]);
     }
 }
