@@ -1,66 +1,10 @@
 @extends('layouts.app')
 @section('title')
-    Dashboard
+    SPK-E-Wallet | Dashboard
 @endsection
-@section('style')
-    <style>
-        /* Customize sidebar width */
-        .sidebar {
-            min-width: 250px;
-            height: 100%;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-            background-color: #343a40;
-            padding-top: 60px;
-            /* Adjust according to your needs */
-        }
-
-        /* Sidebar links */
-        .sidebar a {
-            padding: 10px 15px;
-            text-decoration: none;
-            color: #ffffff;
-            display: block;
-            transition: all 0.3s;
-        }
-
-        /* Sidebar links on hover */
-        .sidebar a:hover {
-            background-color: #454d55;
-        }
-
-        /* Responsive styles */
-        @media (max-width: 991.98px) {
-            .sidebar {
-                width: 250px;
-                left: -250px;
-                transition: all 0.3s;
-            }
-
-            .sidebar.show {
-                left: 0;
-            }
-
-            .toggle-sidebar {
-                display: block;
-            }
-        }
-
-        @media (min-width: 992px) {
-            .toggle-sidebar {
-                display: none;
-            }
-        }
-    </style>
-@endsection
-@section('page')
-    Dashboard
-@endsection
-@section('content-page')
+@section('content')
     <div class="row justify-content-start mt-4 mb-5">
-        <div class="col-3">
+        <div class="col-lg-4 col-md-6 col-sm-9">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Data Alternatif</h5>
@@ -69,7 +13,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-3">
+        <div class="col-lg-4 col-md-6 col-sm-9">
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Kriteria</h5>

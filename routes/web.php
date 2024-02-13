@@ -16,7 +16,7 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('layouts.app');
+    return view('dashboard');
 })->name('dashboard');
 Route::prefix('alternatif')->group(function () {
     Route::get('/index', [AlternatifController::class, 'index'])->name('alternatif.index');
