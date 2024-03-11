@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Alternatif;
+use App\Models\Alternative;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
 
-class AlternatifController extends Controller
+class AlternativeController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +16,8 @@ class AlternatifController extends Controller
      */
     public function index()
     {
-        return view('alternatif.index');
+        $alternatif = Alternative::get();
+        return view('alternatif.index', compact('alternatif'));
     }
 
     /**
@@ -38,26 +39,24 @@ class AlternatifController extends Controller
     public function store(Request $request)
     {
         $request->validate([
-            'nama' => 'required|string',
-            'kode' => 'required|string',
+            'name' => 'required|string',
         ]);
         DB::beginTransaction();
         try {
-            Alternatif::create([
-                'nama' => $request->nama,
-                'kode' => $request->kode,
+            Alternative::create([
+                'name' => $request->name,
             ]);
             DB::commit();
             return response()->json([
                 'message' => 'Alternatif Berhasil Dibuat',
-                'status' => 200
-            ]);
+                'status' => true
+            ], 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'message' => 'Alternatif Gagal Dibuat',
-                'status' => 500
-            ]);
+                'message' => 'Alternatif Gagal Dibuat' . $e,
+                'status' => false
+            ], 400);
         }
     }
 
@@ -69,7 +68,7 @@ class AlternatifController extends Controller
      */
     public function show($id)
     {
-        $alternatif = Alternatif::findOrFail($id);
+        $alternatif = Alternative::findOrFail($id);
         return view('alternatif.show', compact('alternatif'));
     }
 
@@ -81,7 +80,7 @@ class AlternatifController extends Controller
      */
     public function edit($id)
     {
-        $alternatif = Alternatif::findOrFail($id);
+        $alternatif = Alternative::findOrFail($id);
         return view('alternatif.', compact('alternatif'));
     }
 
@@ -92,30 +91,28 @@ class AlternatifController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request)
     {
         $request->validate([
-            'nama' => 'string',
-            'kode' => 'string',
+            'updateName' => 'string',
         ]);
         DB::beginTransaction();
         try {
-            $alternatif = Alternatif::findOrFail($id);
+            $alternatif = Alternative::findOrFail($request->id);
             $alternatif->update([
-                'nama' => $request->nama,
-                'kode' => $request->kode,
+                'name' => $request->updateName,
             ]);
             DB::commit();
             return response()->json([
                 'message' => 'Alternatif Berhasil Diupdate',
-                'status' => 200
-            ]);
+                'status' => true
+            ], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
                 'message' => 'Alternatif Gagal Diupdate',
-                'status' => 500
-            ]);
+                'status' => false
+            ], 400);
         }
     }
 
@@ -127,11 +124,21 @@ class AlternatifController extends Controller
      */
     public function destroy($id)
     {
-        $alternatif = Alternatif::findOrFail($id);
-        $alternatif->delete();
-        return response()->json([
-            'message' => 'Alternatif Berhasil Dihapus',
-            'status' => 200
-        ]);
+        DB::beginTransaction();
+        try {
+            $alternatif = Alternative::findOrFail($id);
+            $alternatif->delete();
+            DB::commit();
+            return response()->json([
+                'message' => 'Alternatif Berhasil Dihapus',
+                'status' => true
+            ], 200);
+        } catch (\Throwable $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Alternatif Gagal Dihapus' . $e,
+                'status' => false
+            ], 200);
+        }
     }
 }

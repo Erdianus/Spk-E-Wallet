@@ -1,7 +1,7 @@
 <?php
 
-use App\Http\Controllers\AlternatifController;
-use App\Http\Controllers\KriteriaController;
+use App\Http\Controllers\AlternativeController;
+use App\Http\Controllers\CriteriaController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -19,20 +19,20 @@ Route::get('/', function () {
     return view('dashboard');
 })->name('dashboard');
 Route::prefix('alternatif')->group(function () {
-    Route::get('/index', [AlternatifController::class, 'index'])->name('alternatif.index');
-    Route::get('/show/{id}', [AlternatifController::class, 'show']);
-    Route::get('/create', [AlternatifController::class, 'create']);
-    Route::post('/store', [AlternatifController::class, 'store']);
-    Route::get('/edit/{id}', [AlternatifController::class, 'edit']);
-    Route::put('/update/{id}', [AlternatifController::class, 'update']);
-    Route::delete('/delete/{id}', [AlternatifController::class, 'destroy']);
+    Route::get('/index', [AlternativeController::class, 'index'])->name('alternatif.index');
+    Route::get('/show/{id}', [AlternativeController::class, 'show']);
+    Route::get('/create', [AlternativeController::class, 'create'])->name('alternatif.create');
+    Route::post('/store', [AlternativeController::class, 'store'])->name('alternatif.store');
+    Route::get('/edit/{id}', [AlternativeController::class, 'edit'])->name('alternatif.edit');
+    Route::put('/update', [AlternativeController::class, 'update'])->name('alternatif.update');
+    Route::delete('/delete/{id}', [AlternativeController::class, 'destroy'])->name('alternatif.delete');
 });
 Route::prefix('kriteria')->group(function () {
-    Route::get('/index', [KriteriaController::class, 'index'])->name('kriteria.index');
-    Route::get('/show/{id}', [KriteriaController::class, 'show']);
-    Route::get('/create', [KriteriaController::class, 'create']);
-    Route::post('/store', [KriteriaController::class, 'store']);
-    Route::get('/edit/{id}', [KriteriaController::class, 'edit']);
-    Route::put('/update/{id}', [KriteriaController::class, 'update']);
-    Route::delete('/delete/{id}', [KriteriaController::class, 'destroy']);
+    Route::get('/index', [CriteriaController::class, 'index'])->name('kriteria.index');
+    Route::get('/show/{id}', [CriteriaController::class, 'show']);
+    Route::get('/create', [CriteriaController::class, 'create']);
+    Route::post('/store', [CriteriaController::class, 'store']);
+    Route::get('/edit/{id}', [CriteriaController::class, 'edit']);
+    Route::put('/update/{id}', [CriteriaController::class, 'update']);
+    Route::delete('/delete/{id}', [CriteriaController::class, 'destroy']);
 });

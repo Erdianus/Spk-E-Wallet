@@ -8,9 +8,9 @@
         </div>
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
             <ul class="nav flex-column">
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page"
-                        href="{{ route('dashboard') }}">
+                <li class="nav-item {{ Request::routeIs('dashboard') ? 'bg-secondary' : '' }} ">
+                    <a class="nav-link d-flex align-items-center {{ Request::routeIs('dashboard') ? 'text-light' : '' }}  gap-2"
+                        aria-current="page" href="{{ route('dashboard') }}"">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-menu-button-wide" viewBox="0 0 16 15">
                             <path
@@ -21,9 +21,9 @@
                         Dashboard
                     </a>
                 </li>
-                <li class="nav-item">
-
-                    <a class="nav-link d-flex align-items-center gap-2" href="{{ route('alternatif.index') }}">
+                <li class="nav-item {{ Request::routeIs('alternatif*') ? 'bg-secondary' : '' }}">
+                    <a class="nav-link d-flex align-items-center {{ Request::routeIs('alternatif*') ? 'text-light' : '' }} gap-2"
+                        href="{{ route('alternatif.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-card-list" viewBox="0 0 16 16">
                             <path
