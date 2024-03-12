@@ -9,7 +9,7 @@ class Alternative extends Model
 {
     use HasFactory;
 
-    public $fillable = [
+    protected $fillable = [
         'name'
     ];
 }
