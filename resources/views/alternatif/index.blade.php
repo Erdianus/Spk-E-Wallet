@@ -32,6 +32,7 @@
                 </thead>
                 <tbody>
                     @foreach ($alternatif as $item)
+                        {{-- {{ dd($item->criteria) }} --}}
                         <tr>
                             <td class="text-start">{{ $loop->iteration }}</td>
                             <td>{{ $item->name }}</td>
@@ -43,6 +44,24 @@
                                     data-route="{{ route('alternatif.delete', $item->id) }}"
                                     onclick="delete_data({{ $item->id }})" type="button"
                                     class="btn btn-danger">Delete</button>
+                                @if ($item->criteria()->exists())
+                                    @php
+                                        $criteriaJson = $item->criteria
+                                            ->map(function ($criteria) {
+                                                return $criteria->toJson();
+                                            })
+                                            ->toJson();
+                                    @endphp
+                                    <button id="buttonUpdateData" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#updateDataForm" data-criteria="{{ $criteriaJson }}"
+                                        data-id="{{ $item->id }}" class="btn btn-success">
+                                        Update Data
+                                    </button>
+                                @else
+                                    <button id="buttonInputData" type="button" data-bs-toggle="modal"
+                                        data-bs-target="#inputDataForm" class="btn btn-secondary"
+                                        data-id="{{ $item->id }}">Input Data</button>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -90,7 +109,7 @@
             })
         });
 
-        //--------------------------Update User------------------------------------
+        //--------------------------Update Alternatif------------------------------------
         $(document).on('click', '#buttonEdit', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
@@ -133,6 +152,95 @@
                 }
             })
         });
+
+        // -----------------------------Input Data Alternatif-------------------------
+        $(document).on('click', '#buttonInputData', function(e) {
+            e.preventDefault();
+            var alternatif = $(this).data('id');
+            var routeUrl = "{{ route('alternatif.input-data', ':id') }}";
+            routeUrl = routeUrl.replace(':id', alternatif);
+            $('#inputDataAlternatif').attr('action', routeUrl);
+        })
+
+        $('#inputDataAlternatif').on('submit', function(e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            var url = $(this).attr('action');
+            //console.log(url);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: url,
+                dataType: 'JSON',
+                data: data,
+                success: function(res) {
+                    if (res.status == true) {
+                        Swal.fire({
+                            title: "Created!",
+                            text: "Data Alternative has been created.",
+                            icon: "success"
+                        }).then((result) => {
+                            $('#createForm').modal('hide');
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Sepertinya ada kesalahan..."
+                        });
+                    }
+                }
+            })
+        });
+
+        // -----------------------------Update Data Alternatif-------------------------
+        $(document).on('click', '#buttonUpdateData', function(e) {
+            e.preventDefault();
+            var alternatif = $(this).data('id');
+            var dataAlternatif = $(this).data('criteria');
+            console.log(dataAlternatif); //Dimasukkan di dalam form update data alternatif
+            var routeUrl = "{{ route('alternatif.update-data', ':id') }}";
+            routeUrl = routeUrl.replace(':id', alternatif);
+            $('#updateDataAlternatif').attr('action', routeUrl);
+        })
+
+        $('#updateDataAlternatif').on('submit', function(e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            var url = $(this).attr('action');
+            //console.log(url);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: url,
+                dataType: 'JSON',
+                data: data,
+                success: function(res) {
+                    if (res.status == true) {
+                        Swal.fire({
+                            title: "Created!",
+                            text: "Data Alternative has been updated.",
+                            icon: "success"
+                        }).then((result) => {
+                            $('#updateDataForm').modal('hide');
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Sepertinya ada kesalahan..."
+                        });
+                    }
+                }
+            })
+        });
+
 
         function delete_data(id) {
             var formUrl = $('#button-delete-' + id).data('route');

@@ -12,4 +12,11 @@ class Alternative extends Model
     protected $fillable = [
         'name'
     ];
+
+    public function criteria()
+    {
+        return $this->belongsToMany(Criteria::class, 'alternative_criteria', 'alternative_id', 'criteria_id')
+            ->withPivot(['value'])
+            ->withTimestamps();
+    }
 }

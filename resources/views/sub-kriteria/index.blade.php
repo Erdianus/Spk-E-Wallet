@@ -9,7 +9,8 @@
         </div>
         <div class="table-responsive p-2">
             <div class="d-flex justify-content-end">
-                <button type="button" data-bs-toggle="modal" data-bs-target="#createForm" class="btn btn-primary my-2">
+                <button id="buttonCreate" type="button" data-bs-toggle="modal" data-bs-target="#createForm"
+                    data-criteria="{{ $criteria }}" class="btn btn-primary my-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />
@@ -24,35 +25,29 @@
                     <tr>
                         <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">No
                         </th>
-                        <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Kode
-                        </th>
-                        <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Nama
-                        </th>
-                        <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Jenis
+                        <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Sub
                             Kriteria
+                        </th>
+                        <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Nilai
                         </th>
                         <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
                             Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($kriteria as $item)
+                    @foreach ($subKriteria as $item)
                         <tr>
                             <td class="text-start">{{ $loop->iteration }}</td>
-                            <td>{{ $item->code }}</td>
                             <td>{{ $item->name }}</td>
-                            <td>{{ $item->type_of_criteria }}</td>
+                            <td class="text-start">{{ $item->value }}</td>
                             <td>
                                 <button id="buttonEdit" type="button" data-bs-toggle="modal" data-bs-target="#editForm"
-                                    class="btn btn-warning" data-id="{{ $item->id }}" data-code="{{ $item->code }}"
-                                    data-name="{{ $item->name }}" data-type="{{ $item->type_of_criteria }}">Edit</button>
+                                    class="btn btn-warning" data-id="{{ $item->id }}" data-value="{{ $item->value }}"
+                                    data-name="{{ $item->name }}">Edit</button>
                                 <button id="button-delete-{{ $item->id }}"
-                                    data-route="{{ route('kriteria.delete', $item->id) }}"
+                                    data-route="{{ route('sub-kriteria.delete', $item->id) }}"
                                     onclick="delete_data({{ $item->id }})" type="button"
                                     class="btn btn-danger">Delete</button>
-                                <a href="{{ route('sub-kriteria.index', $item->id) }}" id="sub-kriteria" type="button"
-                                    class="btn btn-success">Sub
-                                    Kriteria</a>
                             </td>
                         </tr>
                     @endforeach
@@ -60,12 +55,17 @@
             </table>
         </div>
     </div>
-    @include('kriteria.modal')
+    @include('sub-kriteria.modal')
 @endsection
 
 @section('javascript')
     <script>
         // --------------------Create Alternatif-----------------------
+        $(document).on('click', '#buttonCreate', function(e) {
+            e.preventDefault();
+            var criteria_id = $(this).data('criteria');
+            $('#criteria_id').val(criteria_id);
+        })
         $('#formCreate').on('submit', function(e) {
             e.preventDefault();
             var data = $(this).serialize();
@@ -83,7 +83,7 @@
                     if (res.status == true) {
                         Swal.fire({
                             title: "Created!",
-                            text: "Kriteria has been created.",
+                            text: "Sub Kriteria has been created.",
                             icon: "success"
                         }).then((result) => {
                             $('#createForm').modal('hide');
@@ -105,15 +105,13 @@
             e.preventDefault();
             var id = $(this).data('id');
             var updateName = $(this).data('name');
-            var updateCode = $(this).data('code');
-            var updateType = $(this).data('type');
+            var updateValue = $(this).data('value');
             $('#id').val(id);
             $('#updateName').val(updateName);
-            $('#updateCode').val(updateCode);
-            $('#updateType').val(updateType);
+            $('#updateValue').val(updateValue);
         })
 
-        $('#updateKriteria').on('submit', function(e) {
+        $('#updateSubKriteria').on('submit', function(e) {
             e.preventDefault();
             var data = $(this).serialize();
             var url = $(this).attr('action');
@@ -130,7 +128,7 @@
                     if (res.status == true) {
                         Swal.fire({
                             title: "Updated!",
-                            text: "Criteria has been Updated.",
+                            text: "Sub Kriteria has been Updated.",
                             icon: "success"
                         }).then((result) => {
                             $('#editForm').modal('hide');
@@ -176,7 +174,7 @@
                                 if (res.status == true) {
                                     Swal.fire({
                                         title: "Deleted!",
-                                        text: "Criteria has been deleted.",
+                                        text: "Sub Kriteria has been deleted.",
                                         icon: "success"
                                     }).then((result) => {
                                         window.location.reload();

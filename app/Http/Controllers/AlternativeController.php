@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alternative;
+use App\Models\Criteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
@@ -17,25 +18,10 @@ class AlternativeController extends Controller
     public function index()
     {
         $alternatif = Alternative::get();
-        return view('alternatif.index', compact('alternatif'));
+        $criterias = Criteria::get();
+        return view('alternatif.index', compact('alternatif', 'criterias'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        return view('alternatif.create');
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $request->validate([
@@ -60,37 +46,7 @@ class AlternativeController extends Controller
         }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        $alternatif = Alternative::findOrFail($id);
-        return view('alternatif.show', compact('alternatif'));
-    }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        $alternatif = Alternative::findOrFail($id);
-        return view('alternatif.', compact('alternatif'));
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function update(Request $request)
     {
         $request->validate([
@@ -116,12 +72,32 @@ class AlternativeController extends Controller
         }
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
+    public function inputDataAlternatif(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $criterias = Criteria::pluck('id'); // Assuming 'id' is the key you want to use
+            $values = $request->except('_token');
+            // Combine the arrays into a single associative array
+            $dataInput = array_combine($criterias->toArray(), $values);
+            foreach ($dataInput as $criteriaId => $value) {
+                // Access $criteriaId (criteria ID) and $value (input value) in each iteration
+                Alternative::find($id)->criteria()->attach($criteriaId, ['value' => $value]);
+            }
+            DB::commit();
+            return response()->json([
+                'message' => 'Data Alternatif Berhasil Ditambahkan',
+                'status' => true
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Data Alternatif Gagal Ditambahkan',
+                'status' => false
+            ], 400);
+        }
+    }
+
     public function destroy($id)
     {
         DB::beginTransaction();
@@ -138,7 +114,7 @@ class AlternativeController extends Controller
             return response()->json([
                 'message' => 'Alternatif Gagal Dihapus' . $e,
                 'status' => false
-            ], 200);
+            ], 400);
         }
     }
 }

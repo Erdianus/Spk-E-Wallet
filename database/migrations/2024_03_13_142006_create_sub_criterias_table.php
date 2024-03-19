@@ -13,11 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('alternative_criteria', function (Blueprint $table) {
+        Schema::create('sub_criterias', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('criteria_id')->references('id')->on('criterias')->onDelete('cascade');
-            $table->foreignId('alternative_id')->references('id')->on('alternatives')->onDelete('cascade');
+            $table->string('name');
             $table->integer('value');
+            $table->foreignId('criteria_id')->references('id')->on('criterias')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('alternative_criteria');
+        Schema::dropIfExists('sub_criterias');
     }
 };

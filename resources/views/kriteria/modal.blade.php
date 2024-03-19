@@ -12,11 +12,19 @@
                  <div class="modal-body">
                      <div class="mb-3">
                          <label for="code" class="form-label">Kode</label>
-                         <input type="text" class="form-control" id="code" name="code">
+                         <input type="text" class="form-control" id="code" name="code" required>
                      </div>
                      <div class="mb-3">
                          <label for="name" class="form-label">Nama Alternatif</label>
-                         <input type="text" class="form-control" id="name" name="name">
+                         <input type="text" class="form-control" id="name" name="name" required>
+                     </div>
+                     <div class="mb-3">
+                         <label for="type_of_criteria" class="form-label">Jenis Kriteria</label>
+                         <select class="form-select" id="type_of_criteria" name="type_of_criteria" required>
+                             <option value="">Pilih..</option>
+                             <option value="Benefit">Benefit</option>
+                             <option value="Cost">Cost</option>
+                         </select>
                      </div>
                  </div>
                  <div class="modal-footer">
@@ -42,11 +50,19 @@
                      <input type="hidden" name="id" id="id">
                      <div class="mb-3">
                          <label for="updateCode" class="form-label">Kode</label>
-                         <input type="text" class="form-control" id="updateCode" name="updateCode">
+                         <input type="text" class="form-control" id="updateCode" name="updateCode" required>
                      </div>
                      <div class="mb-3">
                          <label for="updateName" class="form-label">Nama Alternatif</label>
-                         <input type="text" class="form-control" id="updateName" name="updateName">
+                         <input type="text" class="form-control" id="updateName" name="updateName" required>
+                     </div>
+                     <div class="mb-3">
+                         <label for="updateType" class="form-label">Jenis Kriteria</label>
+                         <select class="form-select" id="updateType" name="updateType" required>
+                             <option value="">Pilih...</option>
+                             <option value="Benefit">Benefit</option>
+                             <option value="Cost">Cost</option>
+                         </select>
                      </div>
                  </div>
                  <div class="modal-footer">

@@ -2,16 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Criteria;
+use App\Models\SubCriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
-class CriteriaController extends Controller
+class SubCriteriaController extends Controller
 {
-    public function index()
+    public function index($id)
     {
-        $kriteria = Criteria::get();
-        return view('kriteria.index', compact('kriteria'));
+        $subKriteria = SubCriteria::where('criteria_id', $id)
+            ->orderBy('value', 'ASC')
+            ->get();
+        $criteria = $id;
+        return view('sub-kriteria.index', compact('subKriteria', 'criteria'));
     }
 
     /**
@@ -24,25 +27,25 @@ class CriteriaController extends Controller
     {
         $request->validate([
             'name' => 'required|string',
-            'code' => 'required|string|unique:criterias,code',
-            'type_of_criteria' => 'required|string',
+            'value' => 'required|integer',
+            'criteria_id' => 'required|integer',
         ]);
         DB::beginTransaction();
         try {
-            Criteria::create([
+            SubCriteria::create([
                 'name' => $request->name,
-                'code' => $request->code,
-                'type_of_criteria' => $request->type_of_criteria,
+                'value' => $request->value,
+                'criteria_id' => $request->criteria_id,
             ]);
             DB::commit();
             return response()->json([
-                'message' => 'Criteria Berhasil Dibuat',
+                'message' => 'Sub Criteria Berhasil Dibuat',
                 'status' => true
             ], 201);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'message' => 'Criteria Gagal Dibuat' . $e,
+                'message' => 'Sub Criteria Gagal Dibuat' . $e,
                 'status' => false
             ], 400);
         }
@@ -51,28 +54,27 @@ class CriteriaController extends Controller
 
     public function update(Request $request)
     {
+        // dd($request->all());
         $request->validate([
-            'updateCode' => 'string',
             'updateName' => 'string',
-            'updateTypeOfCriteria' => 'string',
+            'updateValue' => 'integer',
         ]);
         DB::beginTransaction();
         try {
-            $kriteria = Criteria::findOrFail($request->id);
-            $kriteria->update([
-                'code' => $request->updateCode,
+            $subKriteria = SubCriteria::findOrFail($request->id);
+            $subKriteria->update([
                 'name' => $request->updateName,
-                'type_of_criteria' => $request->updateTypeOfCriteria,
+                'value' => $request->updateValue,
             ]);
             DB::commit();
             return response()->json([
-                'message' => 'Kriteria Berhasil Diupdate',
+                'message' => 'Sub Kriteria Berhasil Diupdate',
                 'status' => true
             ], 200);
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'message' => 'Kriteria Gagal Diupdate',
+                'message' => 'Sub Kriteria Gagal Diupdate',
                 'status' => false
             ], 400);
         }
@@ -88,8 +90,8 @@ class CriteriaController extends Controller
     {
         DB::beginTransaction();
         try {
-            $kriteria = Criteria::findOrFail($id);
-            $kriteria->delete();
+            $subKriteria = SubCriteria::findOrFail($id);
+            $subKriteria->delete();
             DB::commit();
             return response()->json([
                 'message' => 'Kriteria Berhasil Dihapus',
