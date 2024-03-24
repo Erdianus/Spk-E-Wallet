@@ -15,10 +15,10 @@ return new class extends Migration
     {
         Schema::create('perbandingan_criteria', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('criteria_id')->references('id')->on('criterias')->onDelete('casacade');
-            $table->foreignId('alternative_id')->references('id')->on('alternatives')->onDelete('casacade');
-            $table->integer('weight');
-            $table->integer('for_criteria');
+            $table->foreignId('criteria_id')->references('id')->on('criterias')->onDelete('cascade');
+            $table->foreignId('alternative_id')->references('id')->on('alternatives')->onDelete('cascade');
+            $table->integer('weight')->nullable();
+            $table->integer('for_criteria')->nullable();
             $table->timestamps();
         });
     }

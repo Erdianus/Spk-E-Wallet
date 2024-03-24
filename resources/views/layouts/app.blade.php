@@ -94,7 +94,9 @@
 </head>
 
 <body>
-    @include('layouts.navbar')
+    <div class="sticky-top">
+        @include('layouts.navbar')
+    </div>
     <div class="container-fluid">
         <div class="row">
             @include('layouts.sidebar')

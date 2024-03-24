@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BobotController;
 use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\AlternativeController;
 use App\Http\Controllers\PerhitunganController;
@@ -41,7 +42,9 @@ Route::prefix('kriteria')->group(function () {
         Route::delete('/delete/{id}', [SubCriteriaController::class, 'destroy'])->name('sub-kriteria.delete');
     });
 });
-Route::get('/ahp', [PerhitunganController::class, 'index'])->name('pembobotan.index');
+Route::get('/pembobotan', [BobotController::class, 'index'])->name('pembobotan.index');
 Route::post('/ahp/pembobotan', [PerhitunganController::class, 'weighting'])->name('pembobotan.kriteria');
 Route::get('/ahp/pembobotan/check-konsistensi', [PerhitunganController::class, 'checkConsistency'])->name('pembobotan.check');
 Route::get('/ahp/hasil', [PerhitunganController::class, 'result'])->name('pembobotan.hasil');
+
+Route::get('/perangkingan', [PerhitunganController::class, 'index'])->name('perhitungan.index');

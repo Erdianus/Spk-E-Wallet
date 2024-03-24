@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Criteria;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Validator;
 
 class CriteriaController extends Controller
 {
@@ -22,11 +24,15 @@ class CriteriaController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
+        $criteria = Criteria::find($request->id);
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'code' => 'required|string|unique:criterias,code',
             'type_of_criteria' => 'required|string',
         ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors(), 'status' => false], 400);
+        }
         DB::beginTransaction();
         try {
             Criteria::create([
@@ -51,18 +57,22 @@ class CriteriaController extends Controller
 
     public function update(Request $request)
     {
-        $request->validate([
-            'updateCode' => 'string',
-            'updateName' => 'string',
-            'updateTypeOfCriteria' => 'string',
+        $criteria = Criteria::findOrFail($request->id);
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|string',
+            'code' => 'required|string|unique:criterias,code,' . $request->id,
+            'type_of_criteria' => 'required|string',
         ]);
+        if ($validator->fails()) {
+            return response()->json(['message' => $validator->errors(), 'status' => false], 200);
+        }
         DB::beginTransaction();
         try {
             $kriteria = Criteria::findOrFail($request->id);
             $kriteria->update([
-                'code' => $request->updateCode,
-                'name' => $request->updateName,
-                'type_of_criteria' => $request->updateTypeOfCriteria,
+                'code' => $request->code,
+                'name' => $request->name,
+                'type_of_criteria' => $request->type_of_criteria,
             ]);
             DB::commit();
             return response()->json([
@@ -72,7 +82,7 @@ class CriteriaController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'message' => 'Kriteria Gagal Diupdate',
+                'message' => 'Kriteria Gagal Diupdate' . $e,
                 'status' => false
             ], 400);
         }

@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->enum('type_of_criteria', ['Benefit', 'Cost']);
-            $table->string('code');
+            $table->string('code')->unique();
             $table->timestamps();
         });
     }

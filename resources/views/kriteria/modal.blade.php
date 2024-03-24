@@ -50,15 +50,15 @@
                      <input type="hidden" name="id" id="id">
                      <div class="mb-3">
                          <label for="updateCode" class="form-label">Kode</label>
-                         <input type="text" class="form-control" id="updateCode" name="updateCode" required>
+                         <input type="text" class="form-control" id="updateCode" name="code" required>
                      </div>
                      <div class="mb-3">
                          <label for="updateName" class="form-label">Nama Alternatif</label>
-                         <input type="text" class="form-control" id="updateName" name="updateName" required>
+                         <input type="text" class="form-control" id="updateName" name="name" required>
                      </div>
                      <div class="mb-3">
                          <label for="updateType" class="form-label">Jenis Kriteria</label>
-                         <select class="form-select" id="updateType" name="updateType" required>
+                         <select class="form-select" id="updateType" name="type_of_criteria" required>
                              <option value="">Pilih...</option>
                              <option value="Benefit">Benefit</option>
                              <option value="Cost">Cost</option>

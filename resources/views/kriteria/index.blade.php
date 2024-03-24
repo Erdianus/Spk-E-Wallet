@@ -104,13 +104,10 @@
         $(document).on('click', '#buttonEdit', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
-            var updateName = $(this).data('name');
-            var updateCode = $(this).data('code');
-            var updateType = $(this).data('type');
             $('#id').val(id);
-            $('#updateName').val(updateName);
-            $('#updateCode').val(updateCode);
-            $('#updateType').val(updateType);
+            $('#updateName').val($(this).data('name'));
+            $('#updateCode').val($(this).data('code'));
+            $('#updateType').val($(this).data('type'));
         })
 
         $('#updateKriteria').on('submit', function(e) {
@@ -133,16 +130,23 @@
                             text: "Criteria has been Updated.",
                             icon: "success"
                         }).then((result) => {
-                            $('#editForm').modal('hide');
                             window.location.reload();
                         });
                     } else {
+                        $('#editForm').modal('hide');
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
-                            text: "Sepertinya ada kesalahan...."
+                            text: "Kode Sudah digunakan..."
                         })
                     }
+                },
+                error: function(res) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Sepertinya ada kesalahan...."
+                    })
                 }
             })
         });
