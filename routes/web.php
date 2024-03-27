@@ -43,8 +43,9 @@ Route::prefix('kriteria')->group(function () {
     });
 });
 Route::get('/pembobotan', [BobotController::class, 'index'])->name('pembobotan.index');
-Route::post('/ahp/pembobotan', [PerhitunganController::class, 'weighting'])->name('pembobotan.kriteria');
+Route::post('/pembobotan/store', [PerhitunganController::class, 'saveWeighting'])->name('pembobotan.kriteria');
 Route::get('/ahp/pembobotan/check-konsistensi', [PerhitunganController::class, 'checkConsistency'])->name('pembobotan.check');
 Route::get('/ahp/hasil', [PerhitunganController::class, 'result'])->name('pembobotan.hasil');
 
-Route::get('/perangkingan', [PerhitunganController::class, 'index'])->name('perhitungan.index');
+Route::get('/perhitungan-perangkingan', [PerhitunganController::class, 'perhitungan'])->name('perhitungan.index');
+Route::get('/hasil', [PerhitunganController::class, 'index'])->name('hasil.index');

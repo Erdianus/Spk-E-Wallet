@@ -17,7 +17,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('criteria_id')->references('id')->on('criterias')->onDelete('cascade');
             $table->foreignId('alternative_id')->references('id')->on('alternatives')->onDelete('cascade');
-            $table->integer('value');
+            $table->integer('value')->nullable();
             $table->timestamps();
         });
     }

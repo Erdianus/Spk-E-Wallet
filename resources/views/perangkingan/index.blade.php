@@ -1,6 +1,6 @@
 @extends('layouts.app')
 @section('title')
-    SPK-E-Wallet | Data Kriteria
+    SPK-E-Wallet | Hasil Perhitungan
 @endsection
 @section('content')
     <div class="card p-3">

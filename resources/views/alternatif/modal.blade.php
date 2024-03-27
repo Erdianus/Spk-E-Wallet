@@ -55,7 +55,7 @@
      <div class="modal-dialog modal-dialog-centered">
          <div class="modal-content">
              <div class="modal-header">
-                 <h5 class="modal-title" id="inputDataFormLabel">Input Data Alternatif</h5>
+                 <h5 class="modal-title" id="inputDataFormLabel">Update Data Alternatif</h5>
                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
              </div>
              <form id="inputDataAlternatif" action="" method="POST">
@@ -97,7 +97,7 @@
                      @foreach ($criterias as $key => $item)
                          <div class="mb-3">
                              <label for="udpateData{{ $item->code }}" class="form-label">{{ $item->name }}</label>
-                             <select class="form-select" id="udpateData{{ $item->code }}"
+                             <select class="form-select" id="updateData{{ $item->code }}"
                                  name="{{ $item->code }}" required>
                                  <option value="">Pilih..</option>
                                  @foreach ($item->subCriteria as $sub)
@@ -108,7 +108,7 @@
                      @endforeach
                  </div>
                  <div class="modal-footer">
-                     <button type="submit" class="btn btn-primary">Tambah</button>
+                     <button type="submit" class="btn btn-warning">Update</button>
                  </div>
              </form>
          </div>

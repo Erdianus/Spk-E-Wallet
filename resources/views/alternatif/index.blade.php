@@ -45,15 +45,10 @@
                                     onclick="delete_data({{ $item->id }})" type="button"
                                     class="btn btn-danger">Delete</button>
                                 @if ($item->criteria()->exists())
-                                    @php
-                                        $criteriaJson = $item->criteria
-                                            ->map(function ($criteria) {
-                                                return $criteria->toJson();
-                                            })
-                                            ->toJson();
-                                    @endphp
                                     <button id="buttonUpdateData" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#updateDataForm" data-criteria="{{ $criteriaJson }}"
+                                        data-bs-target="#updateDataForm"
+                                        @foreach ($item->criteria as $data)
+                                            {{ 'data-' . $data->code . '=' . $data->criteria_value->value }} @endforeach
                                         data-id="{{ $item->id }}" class="btn btn-success">
                                         Update Data
                                     </button>
@@ -200,18 +195,26 @@
         $(document).on('click', '#buttonUpdateData', function(e) {
             e.preventDefault();
             var alternatif = $(this).data('id');
-            var dataAlternatif = $(this).data('criteria');
-            console.log(dataAlternatif); //Dimasukkan di dalam form update data alternatif
+            // setURL
             var routeUrl = "{{ route('alternatif.update-data', ':id') }}";
             routeUrl = routeUrl.replace(':id', alternatif);
             $('#updateDataAlternatif').attr('action', routeUrl);
+
+            var dataAlternatif = {!! json_encode($alternatif) !!}
+            const singleAlternatif = dataAlternatif.find(e => e.id == alternatif)
+
+            if (singleAlternatif) {
+                singleAlternatif.criteria.forEach(element => {
+                    $(`#updateData${element.code} option[value='${element.criteria_value.value}']`).prop(
+                        'selected', true)
+                });
+            }
         })
 
         $('#updateDataAlternatif').on('submit', function(e) {
             e.preventDefault();
             var data = $(this).serialize();
             var url = $(this).attr('action');
-            //console.log(url);
             $.ajax({
                 headers: {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

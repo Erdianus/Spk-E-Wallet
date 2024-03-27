@@ -10,11 +10,6 @@ use Illuminate\Support\Facades\Validator;
 
 class AlternativeController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
     public function index()
     {
         $alternatif = Alternative::get();
@@ -93,6 +88,34 @@ class AlternativeController extends Controller
             DB::rollBack();
             return response()->json([
                 'message' => 'Data Alternatif Gagal Ditambahkan',
+                'status' => false
+            ], 400);
+        }
+    }
+
+    public function updateDataAlternatif(Request $request, $id)
+    {
+        DB::beginTransaction();
+        try {
+            $criterias = Criteria::pluck('id'); // Assuming 'id' is the key you want to use
+            $values = $request->except('_token');
+            // Combine the arrays into a single associative array
+            $dataInput = array_combine($criterias->toArray(), $values);
+            $alternative = Alternative::find($id);
+            $alternative->criteria()->detach();
+            foreach ($dataInput as $criteriaId => $value) {
+                // Access $criteriaId (criteria ID) and $value (input value) in each iteration
+                $alternative->criteria()->attach($criteriaId, ['value' => $value]);
+            }
+            DB::commit();
+            return response()->json([
+                'message' => 'Data Alternatif Berhasil Diupdate',
+                'status' => true
+            ], 200);
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return response()->json([
+                'message' => 'Data Alternatif Gagal Diupdate' . $e,
                 'status' => false
             ], 400);
         }

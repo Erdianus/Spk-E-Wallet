@@ -16,7 +16,8 @@ class Alternative extends Model
     public function criteria()
     {
         return $this->belongsToMany(Criteria::class, 'alternative_criteria', 'alternative_id', 'criteria_id')
-            ->withPivot(['value'])
+            ->withPivot('value')
+            ->as('criteria_value')
             ->withTimestamps();
     }
 }

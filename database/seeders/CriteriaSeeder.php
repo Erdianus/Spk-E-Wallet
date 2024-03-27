@@ -27,7 +27,7 @@ class CriteriaSeeder extends Seeder
         ];
         foreach ($criterias as $key => $value) {
             Criteria::create([
-                'code' => "C" . $key,
+                'code' => "C" . $key + 1,
                 'name' => $value,
                 'type_of_criteria' => 'Benefit'
             ]);
