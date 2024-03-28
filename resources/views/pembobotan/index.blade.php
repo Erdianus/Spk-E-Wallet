@@ -8,7 +8,7 @@
         <div class="card-header">
             <h3>Perbandingan Data Antar Kriteria</h3>
         </div>
-        <form action="{{ route('pembobotan.kriteria') }}" method="get">
+        <form id="matriks-perbandingan" action="{{ route('pembobotan.kriteria') }}" method="POST">
             <div class="table-responsive p-3 d-flex justify-content-center">
                 <table class="table table-bordered">
                     <thead>
@@ -47,71 +47,71 @@
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria->id . '-9' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria->id . '-8' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria->id . '-7' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria->id . '-6' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria->id . '-5' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria->id . '-4' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria->id . '-3' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria->id . '-2' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight" checked>
+                                                    id="weight" value="1" checked>
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria2->id . '-2' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria2->id . '-3' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria2->id . '-4' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria2->id . '-5' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria2->id . '-6' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria2->id . '-7' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria2->id . '-8' }}">
                                             </td>
                                             <td class="p-2 text-center">
                                                 <input class="m-2" type="radio" name="{{ $name }}"
-                                                    id="weight">
+                                                    id="weight" value="{{ $criteria2->id . '-9' }}">
                                             </td>
                                             <td class="p-2 text-start">
                                                 {{ $criteria2->name }}
@@ -293,4 +293,42 @@
             </table>
         </div>
     </div>
+@endsection
+@section('javascript')
+    <script>
+        // --------------------Create Alternatif-----------------------
+        $('#matriks-perbandingan').on('submit', function(e) {
+            e.preventDefault();
+            var data = $(this).serialize();
+            var url = $(this).attr('action');
+            //console.log(url);
+            $.ajax({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                type: 'POST',
+                url: url,
+                dataType: 'JSON',
+                data: data,
+                success: function(res) {
+                    if (res.status == true) {
+                        Swal.fire({
+                            title: "Created!",
+                            text: "Sub Kriteria has been created.",
+                            icon: "success"
+                        }).then((result) => {
+                            $('#createForm').modal('hide');
+                            window.location.reload();
+                        });
+                    } else {
+                        Swal.fire({
+                            icon: "error",
+                            title: "Oops...",
+                            text: "Sepertinya ada kesalahan..."
+                        });
+                    }
+                }
+            })
+        });
+    </script>
 @endsection

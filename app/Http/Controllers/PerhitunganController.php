@@ -20,4 +20,9 @@ class PerhitunganController extends Controller
         $criterias = Criteria::all();
         return view('perangkingan.perhitungan', compact('criterias', 'alternatives'));
     }
+
+    public function saveWeighting(Request $request)
+    {
+        dd($request->all());
+    }
 }
