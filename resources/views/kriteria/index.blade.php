@@ -1,11 +1,11 @@
 @extends('layouts.app')
 @section('title')
-    SPK-E-Wallet | Data Alternatif
+    SPK-E-Wallet | Data Kriteria
 @endsection
 @section('content')
     <div class="card">
         <div class="card-header py-3">
-            <h6>Data Alternatif E-Wallet</h6>
+            <h6>Data Kriteria E-Wallet</h6>
         </div>
         <div class="table-responsive p-2">
             {{-- <div class="d-flex justify-content-end">
@@ -24,39 +24,35 @@
                     <tr>
                         <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">No
                         </th>
+                        <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Kode
+                        </th>
                         <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Nama
+                        </th>
+                        <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7">Jenis
+                            Kriteria
                         </th>
                         <th scope="col" class="text-uppercase text-secondary text-sm font-weight-bolder opacity-7 ps-2">
                             Action</th>
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach ($alternatif as $item)
-                        {{-- {{ dd($item->criteria) }} --}}
+                    @foreach ($kriteria as $item)
                         <tr>
                             <td class="text-start">{{ $loop->iteration }}</td>
+                            <td>{{ $item->code }}</td>
                             <td>{{ $item->name }}</td>
+                            <td>{{ $item->type_of_criteria }}</td>
                             <td>
                                 <button id="buttonEdit" type="button" data-bs-toggle="modal" data-bs-target="#editForm"
-                                    class="btn btn-warning" data-id="{{ $item->id }}"
-                                    data-name="{{ $item->name }}">Edit</button>
+                                    class="btn btn-warning" data-id="{{ $item->id }}" data-code="{{ $item->code }}"
+                                    data-name="{{ $item->name }}" data-type="{{ $item->type_of_criteria }}">Edit</button>
                                 {{-- <button id="button-delete-{{ $item->id }}"
-                                    data-route="{{ route('alternatif.delete', $item->id) }}"
+                                    data-route="{{ route('kriteria.delete', $item->id) }}"
                                     onclick="delete_data({{ $item->id }})" type="button"
                                     class="btn btn-danger">Delete</button> --}}
-                                @if ($item->criteria()->exists())
-                                    <button id="buttonUpdateData" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#updateDataForm"
-                                        @foreach ($item->criteria as $data)
-                                            {{ 'data-' . $data->code . '=' . $data->criteria_value->value }} @endforeach
-                                        data-id="{{ $item->id }}" class="btn btn-success">
-                                        Update Data
-                                    </button>
-                                @else
-                                    <button id="buttonInputData" type="button" data-bs-toggle="modal"
-                                        data-bs-target="#inputDataForm" class="btn btn-secondary"
-                                        data-id="{{ $item->id }}">Input Data</button>
-                                @endif
+                                <a href="{{ route('sub-kriteria.index', $item->id) }}" id="sub-kriteria" type="button"
+                                    class="btn btn-success">Sub
+                                    Kriteria</a>
                             </td>
                         </tr>
                     @endforeach
@@ -64,7 +60,7 @@
             </table>
         </div>
     </div>
-    @include('alternatif.modal')
+    @include('kriteria.modal')
 @endsection
 
 @section('javascript')
@@ -87,7 +83,7 @@
                     if (res.status == true) {
                         Swal.fire({
                             title: "Created!",
-                            text: "Alternative has been created.",
+                            text: "Kriteria has been created.",
                             icon: "success"
                         }).then((result) => {
                             $('#createForm').modal('hide');
@@ -104,16 +100,17 @@
             })
         });
 
-        //--------------------------Update Alternatif------------------------------------
+        //--------------------------Update User------------------------------------
         $(document).on('click', '#buttonEdit', function(e) {
             e.preventDefault();
             var id = $(this).data('id');
-            var updateName = $(this).data('name');
-            $('#updateName').val(updateName);
             $('#id').val(id);
+            $('#updateName').val($(this).data('name'));
+            $('#updateCode').val($(this).data('code'));
+            $('#updateType').val($(this).data('type'));
         })
 
-        $('#updateAlternatif').on('submit', function(e) {
+        $('#updateKriteria').on('submit', function(e) {
             e.preventDefault();
             var data = $(this).serialize();
             var url = $(this).attr('action');
@@ -127,123 +124,32 @@
                 data: data,
                 dataType: 'JSON',
                 success: function(res) {
-                    var name = res.message.name ? res.message.name : '';
                     if (res.status == true) {
                         Swal.fire({
                             title: "Updated!",
-                            text: "Alternative has been Updated.",
+                            text: "Criteria has been Updated.",
                             icon: "success"
                         }).then((result) => {
-                            $('#createForm').modal('hide');
                             window.location.reload();
                         });
                     } else {
+                        $('#editForm').modal('hide');
                         Swal.fire({
                             icon: "error",
                             title: "Oops...",
-                            text: "Sepertinya ada kesalahan...."
+                            text: "Kode Sudah digunakan..."
                         })
                     }
-                }
-            })
-        });
-
-        // -----------------------------Input Data Alternatif-------------------------
-        $(document).on('click', '#buttonInputData', function(e) {
-            e.preventDefault();
-            var alternatif = $(this).data('id');
-            var routeUrl = "{{ route('alternatif.input-data', ':id') }}";
-            routeUrl = routeUrl.replace(':id', alternatif);
-            $('#inputDataAlternatif').attr('action', routeUrl);
-        })
-
-        $('#inputDataAlternatif').on('submit', function(e) {
-            e.preventDefault();
-            var data = $(this).serialize();
-            var url = $(this).attr('action');
-            //console.log(url);
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 },
-                type: 'POST',
-                url: url,
-                dataType: 'JSON',
-                data: data,
-                success: function(res) {
-                    if (res.status == true) {
-                        Swal.fire({
-                            title: "Created!",
-                            text: "Data Alternative has been created.",
-                            icon: "success"
-                        }).then((result) => {
-                            $('#createForm').modal('hide');
-                            window.location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Sepertinya ada kesalahan..."
-                        });
-                    }
+                error: function(res) {
+                    Swal.fire({
+                        icon: "error",
+                        title: "Oops...",
+                        text: "Sepertinya ada kesalahan...."
+                    })
                 }
             })
         });
-
-        // -----------------------------Update Data Alternatif-------------------------
-        $(document).on('click', '#buttonUpdateData', function(e) {
-            e.preventDefault();
-            var alternatif = $(this).data('id');
-            // setURL
-            var routeUrl = "{{ route('alternatif.update-data', ':id') }}";
-            routeUrl = routeUrl.replace(':id', alternatif);
-            $('#updateDataAlternatif').attr('action', routeUrl);
-
-            var dataAlternatif = {!! json_encode($alternatif) !!}
-            const singleAlternatif = dataAlternatif.find(e => e.id == alternatif)
-
-            if (singleAlternatif) {
-                singleAlternatif.criteria.forEach(element => {
-                    $(`#updateData${element.code} option[value='${element.criteria_value.value}']`).prop(
-                        'selected', true)
-                });
-            }
-        })
-
-        $('#updateDataAlternatif').on('submit', function(e) {
-            e.preventDefault();
-            var data = $(this).serialize();
-            var url = $(this).attr('action');
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                type: 'POST',
-                url: url,
-                dataType: 'JSON',
-                data: data,
-                success: function(res) {
-                    if (res.status == true) {
-                        Swal.fire({
-                            title: "Created!",
-                            text: "Data Alternative has been updated.",
-                            icon: "success"
-                        }).then((result) => {
-                            $('#updateDataForm').modal('hide');
-                            window.location.reload();
-                        });
-                    } else {
-                        Swal.fire({
-                            icon: "error",
-                            title: "Oops...",
-                            text: "Sepertinya ada kesalahan..."
-                        });
-                    }
-                }
-            })
-        });
-
 
         function delete_data(id) {
             var formUrl = $('#button-delete-' + id).data('route');
@@ -274,7 +180,7 @@
                                 if (res.status == true) {
                                     Swal.fire({
                                         title: "Deleted!",
-                                        text: "Alternative has been deleted.",
+                                        text: "Criteria has been deleted.",
                                         icon: "success"
                                     }).then((result) => {
                                         window.location.reload();

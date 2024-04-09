@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('users', function (Blueprint $table) {
+        Schema::create('perbandingan_criteria', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('username')->unique();
-            $table->string('password');
-            $table->rememberToken();
+            $table->foreignId('criteria1_id')->references('id')->on('criterias')->onDelete('cascade');
+            $table->foreignId('criteria2_id')->references('id')->on('criterias')->onDelete('cascade');
+            $table->integer('weight')->nullable();
+            $table->integer('for_criteria')->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('users');
+        Schema::dropIfExists('perbandingan_criteria');
     }
 };
