@@ -49,8 +49,8 @@
                         Kriteria
                     </a>
                 </li>
-                <li class="nav-item {{ Request::routeIs('pembobotan.index') ? 'bg-secondary' : '' }}">
-                    <a class="nav-link d-flex align-items-center  {{ Request::routeIs('pembobotan.index') ? 'text-light' : '' }} gap-2"
+                <li class="nav-item {{ Request::routeIs('pembobotan*') ? 'bg-secondary' : '' }}">
+                    <a class="nav-link d-flex align-items-center  {{ Request::routeIs('pembobotan*') ? 'text-light' : '' }} gap-2"
                         href="{{ route('pembobotan.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-sliders" viewBox="0 0 16 16">
@@ -73,7 +73,7 @@
                         Perhitungan Perangkingan
                     </a>
                 </li>
-                <li class="nav-item {{ Request::routeIs('hasil.index') ? 'bg-secondary' : '' }}">
+                {{-- <li class="nav-item {{ Request::routeIs('hasil.index') ? 'bg-secondary' : '' }}">
                     <a class="nav-link d-flex align-items-center  {{ Request::routeIs('hasil.index') ? 'text-light' : '' }} gap-2"
                         href="{{ route('hasil.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
@@ -85,7 +85,7 @@
                         </svg>
                         Hasil Perhitungan
                     </a>
-                </li>
+                </li> --}}
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"

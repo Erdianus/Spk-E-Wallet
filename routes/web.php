@@ -49,11 +49,13 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete/{id}', [SubCriteriaController::class, 'destroy'])->name('sub-kriteria.delete');
         });
     });
-    Route::get('/pembobotan', [BobotController::class, 'index'])->name('pembobotan.index');
-    Route::post('/pembobotan/store', [PerhitunganController::class, 'saveWeighting'])->name('pembobotan.kriteria');
-    Route::get('/ahp/pembobotan/check-konsistensi', [PerhitunganController::class, 'checkConsistency'])->name('pembobotan.check');
+    Route::get('/pembobotan/AHP', [PerhitunganController::class, 'pembobotanIndex'])->name('pembobotan.index');
+    Route::get('/pembobotan/check-konsistensi', [PerhitunganController::class, 'checkConsistency'])->name('pembobotan.check');
+    Route::post('/pembobotan/store', [PerhitunganController::class, 'saveWeighting'],)->name('pembobotan.store');
+    Route::post('/pembobotan/input-skala', [PerhitunganController::class, 'inputSkala'],)->name('pembobotan.input-skala');
     Route::get('/ahp/hasil', [PerhitunganController::class, 'result'])->name('pembobotan.hasil');
 
-    Route::get('/perhitungan-perangkingan', [PerhitunganController::class, 'perhitungan'])->name('perhitungan.index');
+    Route::get('/perhitungan/WASPAS', [PerhitunganController::class, 'perhitungan'])->name('perhitungan.index');
+    Route::post('/save-perangkingan', [PerhitunganController::class, 'savePerangkingan'])->name('perangkingan.store');
     Route::get('/hasil', [PerhitunganController::class, 'index'])->name('hasil.index');
 });

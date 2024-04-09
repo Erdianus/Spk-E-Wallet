@@ -19,4 +19,9 @@ class Criteria extends Model
     {
         return $this->hasMany(SubCriteria::class, 'criteria_id', 'id');
     }
+
+    public function weight()
+    {
+        return $this->hasOne(CriteriaWeight::class, 'criteria_id', 'id');
+    }
 }

@@ -13,12 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::create('perbandingan_criteria', function (Blueprint $table) {
+        Schema::create('criteria_weight', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('criteria1_id')->references('id')->on('criterias')->onDelete('cascade');
-            $table->foreignId('criteria2_id')->references('id')->on('criterias')->onDelete('cascade');
-            $table->integer('weight')->nullable();
-            $table->integer('for_criteria')->nullable();
+            $table->foreignId('criteria_id')->nullable()->references('id')->on('criterias')->onDelete('cascade');
+            $table->decimal('weight', 8, 5)->nullable();
             $table->timestamps();
         });
     }
@@ -30,6 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('perbandingan_criteria');
+        Schema::dropIfExists('bobot_kriteria');
     }
 };

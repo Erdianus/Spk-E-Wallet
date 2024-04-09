@@ -8,7 +8,7 @@
             <h6>Data Alternatif E-Wallet</h6>
         </div>
         <div class="table-responsive p-2">
-            <div class="d-flex justify-content-end">
+            {{-- <div class="d-flex justify-content-end">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#createForm" class="btn btn-primary my-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -18,7 +18,7 @@
                     </svg>
                     Tambah
                 </button>
-            </div>
+            </div> --}}
             <table class="table text-start mb-0" id="table">
                 <thead>
                     <tr>
@@ -40,10 +40,10 @@
                                 <button id="buttonEdit" type="button" data-bs-toggle="modal" data-bs-target="#editForm"
                                     class="btn btn-warning" data-id="{{ $item->id }}"
                                     data-name="{{ $item->name }}">Edit</button>
-                                <button id="button-delete-{{ $item->id }}"
+                                {{-- <button id="button-delete-{{ $item->id }}"
                                     data-route="{{ route('alternatif.delete', $item->id) }}"
                                     onclick="delete_data({{ $item->id }})" type="button"
-                                    class="btn btn-danger">Delete</button>
+                                    class="btn btn-danger">Delete</button> --}}
                                 @if ($item->criteria()->exists())
                                     <button id="buttonUpdateData" type="button" data-bs-toggle="modal"
                                         data-bs-target="#updateDataForm"

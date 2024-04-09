@@ -12,8 +12,6 @@ class BobotController extends Controller
     {
         $criterias = Criteria::get();
         $criterias2 = Criteria::get();
-
-
         return view('pembobotan.index', compact('criterias', 'criterias2'));
     }
 }
