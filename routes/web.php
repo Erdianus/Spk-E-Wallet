@@ -4,9 +4,10 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BobotController;
 use App\Http\Controllers\CriteriaController;
 use App\Http\Controllers\AlternativeController;
-use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\SubCriteriaController;
+use App\Http\Controllers\AuthenticationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,6 +20,7 @@ use App\Http\Controllers\SubCriteriaController;
 |
 */
 
+Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
 Route::get('/form-login', [AuthenticationController::class, 'formLogin'])->name('form-login');
 Route::get('/form-register', [AuthenticationController::class, 'formRegister'])->name('form-register');
 Route::post('/login', [AuthenticationController::class, 'login'])->name('login');

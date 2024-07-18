@@ -20,8 +20,8 @@ class Criteria extends Model
         return $this->hasMany(SubCriteria::class, 'criteria_id', 'id');
     }
 
-    public function weight()
+    public function bobot()
     {
-        return $this->hasOne(CriteriaWeight::class, 'criteria_id', 'id');
+        return $this->hasMany(CriteriaWeight::class, 'criteria_id', 'id');
     }
 }

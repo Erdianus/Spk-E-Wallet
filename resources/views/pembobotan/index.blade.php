@@ -138,6 +138,7 @@
                         @php
                             $tableNormalisasi = [];
                             $totalRowNormalisasi = [];
+                            $bobotKriteria = [];
                         @endphp
                         @foreach ($criterias as $row => $criteria1)
                             <tr>
@@ -185,9 +186,10 @@
                                 @endforeach
                                 @php
                                     $totalRowNormalisasi[$row] = $jumlah;
+                                    $bobotKriteria[$criteria1->code] = number_format($jumlah / $criteria2->count(), 5);
                                 @endphp
                                 <th>{{ number_format($jumlah, 5) }}</th>
-                                <th>{{ number_format($jumlah / $criteria2->count(), 5) }}</th>
+                                <th>{{ $bobotKriteria[$criteria1->code] }}</th>
                             </tr>
                             <input type="hidden" name="{{ $criteria1->code }}"
                                 value="{{ $criteria1->id . '-' . number_format($jumlah / $criteria2->count(), 5) }}">

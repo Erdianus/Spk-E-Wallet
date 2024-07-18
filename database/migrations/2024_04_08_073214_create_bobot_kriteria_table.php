@@ -15,6 +15,7 @@ return new class extends Migration
     {
         Schema::create('criteria_weight', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('respondent_id')->nullable()->references('id')->on('respondents')->onDelete('cascade');
             $table->foreignId('criteria_id')->nullable()->references('id')->on('criterias')->onDelete('cascade');
             $table->decimal('weight', 8, 5)->nullable();
             $table->timestamps();

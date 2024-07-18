@@ -12,6 +12,7 @@ class CriteriaWeight extends Model
     protected $table = 'criteria_weight';
     protected $fillable = [
         'criteria_id',
+        'respondent_id',
         'weight',
     ];
 }

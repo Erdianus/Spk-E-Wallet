@@ -92,8 +92,8 @@ class PerhitunganController extends Controller
     public function index()
     {
 
-        dd(collect($this->qiValue));
-        $result = $this->qiValue;
+        // dd(collect($this->qiValue));
+        // $result = $this->qiValue;
         return view('perangkingan.index', compact('alternatives'));
     }
 
