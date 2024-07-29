@@ -8,6 +8,7 @@ use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\SubCriteriaController;
 use App\Http\Controllers\AuthenticationController;
+use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -27,9 +28,7 @@ Route::post('/login', [AuthenticationController::class, 'login'])->name('login')
 Route::post('/register', [AuthenticationController::class, 'register'])->name('register');
 Route::middleware('auth')->group(function () {
     Route::get('/logout', [AuthenticationController::class, 'logout'])->name('logout');
-    Route::get('/dashboard', function () {
-        return view('dashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::prefix('alternatif')->group(function () {
         Route::get('/index', [AlternativeController::class, 'index'])->name('alternatif.index');
         Route::post('/input/{id}', [AlternativeController::class, 'inputDataAlternatif'])->name('alternatif.input-data');
@@ -51,13 +50,13 @@ Route::middleware('auth')->group(function () {
             Route::delete('/delete/{id}', [SubCriteriaController::class, 'destroy'])->name('sub-kriteria.delete');
         });
     });
-    Route::get('/pembobotan/AHP', [PerhitunganController::class, 'pembobotanIndex'])->name('pembobotan.index');
-    Route::get('/pembobotan/check-konsistensi', [PerhitunganController::class, 'checkConsistency'])->name('pembobotan.check');
-    Route::post('/pembobotan/store', [PerhitunganController::class, 'saveWeighting'],)->name('pembobotan.store');
-    Route::post('/pembobotan/input-skala', [PerhitunganController::class, 'inputSkala'],)->name('pembobotan.input-skala');
-    Route::get('/ahp/hasil', [PerhitunganController::class, 'result'])->name('pembobotan.hasil');
+    // Route::get('/pembobotan/AHP', [PerhitunganController::class, 'pembobotanIndex'])->name('pembobotan.index');
+    // Route::get('/pembobotan/check-konsistensi', [PerhitunganController::class, 'checkConsistency'])->name('pembobotan.check');
+    // Route::post('/pembobotan/store', [PerhitunganController::class, 'saveWeighting'],)->name('pembobotan.store');
+    // Route::post('/pembobotan/input-skala', [PerhitunganController::class, 'inputSkala'],)->name('pembobotan.input-skala');
+    // Route::get('/ahp/hasil', [PerhitunganController::class, 'result'])->name('pembobotan.hasil');
 
-    Route::get('/perhitungan/WASPAS', [PerhitunganController::class, 'perhitungan'])->name('perhitungan.index');
-    Route::post('/save-perangkingan', [PerhitunganController::class, 'savePerangkingan'])->name('perangkingan.store');
-    Route::get('/hasil', [PerhitunganController::class, 'index'])->name('hasil.index');
+    // Route::get('/perhitungan/WASPAS', [PerhitunganController::class, 'perhitungan'])->name('perhitungan.index');
+    // Route::post('/save-perangkingan', [PerhitunganController::class, 'savePerangkingan'])->name('perangkingan.store');
+    // Route::get('/hasil', [PerhitunganController::class, 'index'])->name('hasil.index');
 });

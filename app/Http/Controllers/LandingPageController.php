@@ -13,11 +13,12 @@ class LandingPageController extends Controller
     {
         $alternatives = Alternative::get();
         $criterias = Criteria::all();
+        $totalKriteria = $criterias->count();
+        $message = '';
+        $indexRandomConsistency = [0, 0, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49];
         $alternativeValue = [];
-        $matrixKeputusanNormalisasi = [];
-        // $bobotKriteria = [];
         // dd($request->all());
-        if ($request) {
+        if ($request->all()) {
             $nilaiPerbandingan = collect($request->all())->except('responden')->toArray();
             $responden = $request->responden;
 
@@ -29,6 +30,7 @@ class LandingPageController extends Controller
                     $alternativeValue[$column][$row] = $criteria->criteria_value->value;
                 }
             }
+            // dd($alternativeValue);
 
             //Tabel Matrix Perbandingan Berpasangan
             $tablePerbandingan = [];
@@ -68,9 +70,11 @@ class LandingPageController extends Controller
                     $totalPerColumnTablePerbandingan[$criteria->code] = $totalPerColumnTablePerbandingan[$criteria->code] + $value[$criteria->code];
                 }
             }
-            dd($totalPerColumnTablePerbandingan);
+            // dd($totalPerColumnTablePerbandingan);
 
-            //Tabel Normalisasi Kriteria
+
+
+            //////////////////////Tabel Normalisasi Kriteria//////////////////////////
             $tableNormalisasi = [];
             foreach ($criterias as $criteria) {
                 foreach ($criterias as $criteria2) {
@@ -78,12 +82,50 @@ class LandingPageController extends Controller
                 }
             }
             // dd($tableNormalisasi);
+            $totalPerRowTableNormalisasi = [];
+            foreach ($criterias as $criteria) {
+                $totalPerRowTableNormalisasi[$criteria->code] = 0;
+            }
+            foreach ($criterias as $criteria) {
+                foreach ($tableNormalisasi[$criteria->code] as $value) {
+                    $totalPerRowTableNormalisasi[$criteria->code] = $totalPerRowTableNormalisasi[$criteria->code] + $value;
+                }
+            }
+            // dd($totalPerRowTableNormalisasi);
 
 
+            ///////////////////////BOBOT KRITERIA/////////////////////////////
+            $bobotKriteria = [];
+            $eigenValue = [];
+            foreach ($criterias as $criteria) {
+                $bobotKriteria[$criteria->code] = $totalPerRowTableNormalisasi[$criteria->code] / $totalKriteria;
+                $eigenValue[$criteria->code] = $totalPerColumnTablePerbandingan[$criteria->code] * $bobotKriteria[$criteria->code];
+            }
+            // dd($eigenValue);
+            // dd($bobotKriteria);
+            $totalEigenValue = collect($eigenValue)->sum(); //Lamda Max
 
 
+            //////////////////////////Mencari Consistency Index////////////////////////////////
+            $ci = ($totalEigenValue - $totalKriteria) / ($totalKriteria - 1);
+            // dd($indexRandomConsistency[$totalKriteria - 1]);
+            $cr = $ci / $indexRandomConsistency[$totalKriteria - 1];
+            // dd($cr);
+            // dd($cr < 0.1);
+            if ($cr > 0.1) {
+                $failed = 'Nilai Perbandingan Anda Belum Konsisten Silahkan Input Ulang Kembali';
+                return view('landing-page', compact('alternatives', 'criterias', 'nilaiPerbandingan', 'responden', 'failed'));
+            }
+            // dd($cr);
+
+
+            /////////////////////Perangkingan Menggunakan Metode Waspas//////////////////////////////////
+
+            ///////////////////////////Normalisasi Matrix Keputusan///////////////////////////// 
+            $matrixKeputusanNormalisasi = [];
             foreach ($alternatives as $row => $alternative) {
                 foreach ($alternative->criteria as $column => $criteria) {
+                    // dd($criteria->criteria_value->value);
                     $maxValue = max($alternativeValue[$column]);
                     $minValue = min($alternativeValue[$column]);
                     if ($criteria->type_of_criteria == 'Benefit') {
@@ -96,28 +138,29 @@ class LandingPageController extends Controller
             }
             // dd($matrixKeputusanNormalisasi);
 
-
-
-            // //Perhitungan Nilai Qi
-            // $qiValue = [];
-            // $finalResult = [];
-            // foreach ($alternatives as $row => $alternative) {
-            //     $perkalian = [];
-            //     $perpangkatan = [];
-            //     foreach ($criterias as $column => $criteria) {
-            //         // dd($criteria);
-            //         $perkalian[$column] =
-            //             $matrixKeputusanNormalisasi[$column][$row] * $criteria->weight->weight;
-            //         $perpangkatan[$column] =
-            //             $matrixKeputusanNormalisasi[$column][$row] ^ $criteria->weight->weight;
-            //     }
-            //     $totalRowPerkalian = array_sum($perkalian);
-            //     $totalRowPerpangkatan = array_sum($perpangkatan);
-            //     $qiValue[$row] = 0.5 * $totalRowPerkalian + 0.5 * $totalRowPerpangkatan;
-            //     $finalResult[$row]['qi'] = $qiValue[$row];
-            //     $finalResult[$row]['name'] = $alternative->name;
-            // }
-            // $hasilPerangkingan = collect($finalResult)->sortByDesc('qi');
+            //Perhitungan Nilai Qi
+            $qiValue = [];
+            $finalResult = [];
+            foreach ($alternatives as $row => $alternative) {
+                $perkalian = [];
+                $perpangkatan = [];
+                foreach ($criterias as $column => $criteria) {
+                    // dd($criteria);
+                    $perkalian[$column] =
+                        $matrixKeputusanNormalisasi[$column][$row] * $bobotKriteria[$criteria->code];
+                    $perpangkatan[$column] =
+                        $matrixKeputusanNormalisasi[$column][$row] ^ $bobotKriteria[$criteria->code];
+                }
+                $totalRowPerkalian = array_sum($perkalian);
+                $totalRowPerpangkatan = array_sum($perpangkatan);
+                $qiValue[$row] = 0.5 * $totalRowPerkalian + 0.5 * $totalRowPerpangkatan;
+                $finalResult[$row]['qi'] = $qiValue[$row];
+                $finalResult[$row]['name'] = $alternative->name;
+            }
+            $hasilPerangkingan = collect($finalResult)->sortByDesc('qi');
+            // dd($hasilPerangkingan);
+            $success = 'Silahkan scroll kebawah untuk melihat hasilnya';
+            return view('landing-page', compact('alternatives', 'criterias', 'nilaiPerbandingan', 'responden', 'success', 'hasilPerangkingan'));
         } else {
             $nilaiPerbandingan = null;
             $responden = null;

@@ -8,7 +8,7 @@
             <h6>Data Alternatif E-Wallet</h6>
         </div>
         <div class="table-responsive p-2">
-            {{-- <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-end">
                 <button type="button" data-bs-toggle="modal" data-bs-target="#createForm" class="btn btn-primary my-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-circle" viewBox="0 0 16 16">
@@ -18,7 +18,7 @@
                     </svg>
                     Tambah
                 </button>
-            </div> --}}
+            </div>
             <table class="table text-start mb-0" id="table">
                 <thead>
                     <tr>

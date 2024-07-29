@@ -49,7 +49,6 @@
                 <h2>Welcome to SPK E-Wallet</h2>
             </div>
         </div>
-
         {{-- Input Perbandingan --}}
         <div class="row">
             <div class="card">
@@ -58,15 +57,6 @@
                         <table class="table table-bordered text-center">
 
                             <thead>
-                                <tr>
-                                    <th class="col align-middle">
-                                        <label for="responden">Nama Responden</label>
-                                    </th>
-                                    <td colspan="18" class="col align-middle">
-                                        <input type="text" class="form-control" name="responden" id="responden"
-                                            value="{{ $responden }}">
-                                    </td>
-                                </tr>
                                 <tr>
                                     <th rowspan="2" class="col align-middle">Nama Kriteria</th>
                                     <th colspan="17" class="col align-middle">Nilai Perbandingan</th>
@@ -97,12 +87,19 @@
                                                     <th>{{ $criteria->name }}</th>
                                                     @for ($i = 9; $i >= 2; $i--)
                                                         <td>
-                                                            @if (array_key_exists($criteria->code . '/' . $criteria2->code, $nilaiPerbandingan))
-                                                                <input type="radio"
-                                                                    name="{{ $criteria->code . '/' . $criteria2->code }}"
-                                                                    value="{{ 'for-' . $criteria->code . '-' . $i }}"
-                                                                    {{ $nilaiPerbandingan[$criteria->code . '/' . $criteria2->code] == 'for-' . $criteria->code . '-' . $i ? 'checked' : '' }}
-                                                                    required>
+                                                            @if ($nilaiPerbandingan)
+                                                                @if (array_key_exists($criteria->code . '/' . $criteria2->code, $nilaiPerbandingan))
+                                                                    <input type="radio"
+                                                                        name="{{ $criteria->code . '/' . $criteria2->code }}"
+                                                                        value="{{ 'for-' . $criteria->code . '-' . $i }}"
+                                                                        {{ $nilaiPerbandingan[$criteria->code . '/' . $criteria2->code] == 'for-' . $criteria->code . '-' . $i ? 'checked' : '' }}
+                                                                        required>
+                                                                @else
+                                                                    <input type="radio"
+                                                                        name="{{ $criteria->code . '/' . $criteria2->code }}"
+                                                                        value="{{ 'for-' . $criteria->code . '-' . $i }}"
+                                                                        required>
+                                                                @endif
                                                             @else
                                                                 <input type="radio"
                                                                     name="{{ $criteria->code . '/' . $criteria2->code }}"
@@ -112,12 +109,20 @@
                                                         </td>
                                                     @endfor
                                                     <td>
-                                                        @if (array_key_exists($criteria->code . '/' . $criteria2->code, $nilaiPerbandingan))
-                                                            <input type="radio"
-                                                                name="{{ $criteria->code . '/' . $criteria2->code }}"
-                                                                value="1"
-                                                                {{ $nilaiPerbandingan[$criteria->code . '/' . $criteria2->code] == 1 ? 'checked' : '' }}
-                                                                required>
+                                                        @if ($nilaiPerbandingan)
+                                                            @if (array_key_exists($criteria->code . '/' . $criteria2->code, $nilaiPerbandingan))
+                                                                <input type="radio"
+                                                                    name="{{ $criteria->code . '/' . $criteria2->code }}"
+                                                                    value="1"
+                                                                    {{ $nilaiPerbandingan[$criteria->code . '/' . $criteria2->code] == 1 ? 'checked' : '' }}
+                                                                    required>
+                                                            @else
+                                                                <input type="radio"
+                                                                    name="{{ $criteria->code . '/' . $criteria2->code }}"
+                                                                    value="1"
+                                                                    {{ $nilaiPerbandingan == null ? 'checked' : '' }}
+                                                                    required>
+                                                            @endif
                                                         @else
                                                             <input type="radio"
                                                                 name="{{ $criteria->code . '/' . $criteria2->code }}"
@@ -128,16 +133,23 @@
                                                     </td>
                                                     @for ($i = 2; $i <= 9; $i++)
                                                         <td>
-                                                            @if (array_key_exists($criteria->code . '/' . $criteria2->code, $nilaiPerbandingan))
-                                                                <input type="radio"
-                                                                    name="{{ $criteria->code . '/' . $criteria2->code }}"
-                                                                    value="{{ 'for-' . $criteria2->code . '-' . $i }}"
-                                                                    {{ $nilaiPerbandingan[$criteria->code . '/' . $criteria2->code] == 'for-' . $criteria2->code . '-' . $i ? 'checked' : '' }}
-                                                                    required>
+                                                            @if ($nilaiPerbandingan)
+                                                                @if (array_key_exists($criteria->code . '/' . $criteria2->code, $nilaiPerbandingan))
+                                                                    <input type="radio"
+                                                                        name="{{ $criteria->code . '/' . $criteria2->code }}"
+                                                                        value="{{ 'for-' . $criteria2->code . '-' . $i }}"
+                                                                        {{ $nilaiPerbandingan[$criteria->code . '/' . $criteria2->code] == 'for-' . $criteria2->code . '-' . $i ? 'checked' : '' }}
+                                                                        required>
+                                                                @else
+                                                                    <input type="radio"
+                                                                        name="{{ $criteria->code . '/' . $criteria2->code }}"
+                                                                        value="{{ 'for-' . $criteria2->code . '-' . $i }}"
+                                                                        required>
+                                                                @endif
                                                             @else
                                                                 <input type="radio"
                                                                     name="{{ $criteria->code . '/' . $criteria2->code }}"
-                                                                    value="{{ 'for-' . $criteria2->code . '-' . $i }}"
+                                                                    value="{{ 'for-' . $criteria->code . '-' . $i }}"
                                                                     required>
                                                             @endif
                                                         </td>
@@ -164,29 +176,31 @@
         </div>
 
         {{-- Hasil Perhitungan --}}
-        <div class="row pt-3">
-            <div class="card p-3">
-                <div class="card-header text-center pt-3">
-                    <h4>Hasil Perangkingan</h4>
-                </div>
-                <table class="table text-center">
-                    <thead>
-                        <tr>
-                            <th class="col">No</th>
-                            <th class="col">Nama Alternatif</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($alternatives as $alternative)
+        @if (!empty($hasilPerangkingan))
+            <div id="hasil-perangkingan" class="row pt-3">
+                <div class="card p-3">
+                    <div class="card-header text-center pt-3">
+                        <h4>Hasil Perangkingan</h4>
+                    </div>
+                    <table class="table text-center">
+                        <thead>
                             <tr>
-                                <td>{{ $loop->iteration }}</td>
-                                <td>{{ $alternative->name }}</td>
+                                <th class="col">No</th>
+                                <th class="col">Nama Alternatif</th>
                             </tr>
-                        @endforeach
-                    </tbody>
-                </table>
+                        </thead>
+                        <tbody>
+                            @foreach ($hasilPerangkingan as $alternative)
+                                <tr>
+                                    <td>{{ $loop->iteration }}</td>
+                                    <td>{{ $alternative['name'] }}</td>
+                                </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
             </div>
-        </div>
+        @endif
         @include('layouts.footer')
     </div>
 
@@ -194,39 +208,28 @@
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script>
-        // $('#form-respondent').on('submit', function(e) {
-        //     e.preventDefault();
-        //     var data = $(this).serialize();
-        //     var url = $(this).attr('action');
-        //     console.log(data);
-        //     $.ajax({
-        //         headers: {
-        //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        //         },
-        //         type: 'GET',
-        //         url: url,
-        //         dataType: 'JSON',
-        //         data: data,
-        //         success: function(res) {
-        //             if (res.status == true) {
-        //                 Swal.fire({
-        //                     title: "Saved!",
-        //                     text: "Bobot Konsisten",
-        //                     icon: "success"
-        //                 }).then((result) => {
-        //                     window.location.reload();
-        //                 });
-        //             } else {
-        //                 Swal.fire({
-        //                     icon: "error",
-        //                     title: "Oops...",
-        //                     text: "Sepertinya ada kesalahan..."
-        //                 });
-        //             }
-        //         }
-        //     })
-        // });
-    </script>
+    @if (!empty($failed))
+        <script>
+            $(document).ready(function() {
+                Swal.fire({
+                    icon: 'error', // Change to 'success', 'info', or 'warning' based on your message type
+                    title: 'Oops...',
+                    text: '{{ $failed }}',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @elseif(!empty($success))
+        <script>
+            $(document).ready(function() {
+                Swal.fire({
+                    icon: 'success', // Change to 'success', 'info', or 'warning' based on your message type
+                    title: 'yesss',
+                    text: '{{ $success }}',
+                    confirmButtonText: 'OK'
+                });
+            });
+        </script>
+    @endif
 
 </html>

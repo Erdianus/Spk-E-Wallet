@@ -8,7 +8,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Data Alternatif</h5>
-                    <p class="card-text">(Total data alternatif)</p>
+                    <h2 class="card-text mx-2 my-3">{{ $totalAlternatives }}</h2>
                     <a href="{{ route('alternatif.index') }}" class="btn btn-primary">Lihat Data</a>
                 </div>
             </div>
@@ -17,7 +17,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">Kriteria</h5>
-                    <p class="card-text">(Total data kriteria)</p>
+                    <h2 class="card-text mx-2 my-3">{{ $totalCriterias }}</h2>
                     <a href="{{ route('kriteria.index') }}" class="btn btn-primary">Lihat Data</a>
                 </div>
             </div>
