@@ -5,12 +5,19 @@
 @section('content')
     <div class="card">
         <div class="card-header py-3">
-            <h6>Data Kriteria E-Wallet</h6>
+            <h3>Data Sub Kriteria {{ $kriteria->name }}</h3>
         </div>
         <div class="table-responsive p-2">
-            <div class="d-flex justify-content-end">
+            <div class="d-flex justify-content-between">
+                <a href="{{ route('kriteria.index') }}" type="button" class="btn btn-primary my-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" viewBox="0 0 24 24">
+                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5 12h14M5 12l4-4m-4 4 4 4" />
+                    </svg>
+                    Kembali
+                </a>
                 <button id="buttonCreate" type="button" data-bs-toggle="modal" data-bs-target="#createForm"
-                    data-criteria="{{ $criteria }}" class="btn btn-primary my-2">
+                    data-criteria="{{ $kriteria->id }}" class="btn btn-primary my-2">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-plus-circle" viewBox="0 0 16 16">
                         <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16" />

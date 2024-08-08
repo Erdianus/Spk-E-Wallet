@@ -5,7 +5,7 @@
 @section('content')
     <div class="card">
         <div class="card-header py-3">
-            <h6>Data Alternatif E-Wallet</h6>
+            <h3>Data Alternatif E-Wallet</h3>
         </div>
         <div class="table-responsive p-2">
             <div class="d-flex justify-content-end">

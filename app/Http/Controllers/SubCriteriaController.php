@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Criteria;
 use App\Models\SubCriteria;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -10,11 +11,12 @@ class SubCriteriaController extends Controller
 {
     public function index($id)
     {
+        $kriteria = Criteria::findOrFail($id);
         $subKriteria = SubCriteria::where('criteria_id', $id)
             ->orderBy('value', 'ASC')
             ->get();
         $criteria = $id;
-        return view('sub-kriteria.index', compact('subKriteria', 'criteria'));
+        return view('sub-kriteria.index', compact('subKriteria', 'kriteria'));
     }
 
     /**

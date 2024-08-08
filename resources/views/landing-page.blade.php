@@ -44,10 +44,23 @@
         </nav>
     </div>
     <div class="container my-5">
+        <div class="d-flex justify-content-center">
+            <img class="mx-1" src="{{ asset('img/Dana.png') }}" width="150" style="object-fit:contain">
+            <img class="mx-1" src="{{ asset('img/Doku.png') }}" width="50" style="object-fit:contain">
+            <img class="mx-1" src="{{ asset('img/gopay.png') }}" width="150" style="object-fit:contain">
+            <img class="" src="{{ asset('img/ShopeePay.png') }}" width="150" style="object-fit:contain">
+            <img class="mx-1" src="{{ asset('img/Ovo.png') }}" width="150" style="object-fit:contain">
+            <img class="mx-1" src="{{ asset('img/Link Aja.png') }}" width="150" style="object-fit:contain">
+            <img class="mx-1" src="{{ asset('img/I-Saku.png') }}" width="150" style="object-fit:contain">
+        </div>
         <div class="row">
             <div class="text-center mb-5">
                 <h2>Welcome to SPK E-Wallet</h2>
             </div>
+        </div>
+        <div class="row">
+            <span class="badge bg-warning text-dark">Silahkan input nilai perbandingan anda berdasarkan kriteria yan
+                tersedia dibawah ini!</span>
         </div>
         {{-- Input Perbandingan --}}
         <div class="row">

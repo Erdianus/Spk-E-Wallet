@@ -21,8 +21,8 @@
                         Dashboard
                     </a>
                 </li>
-                <li class="nav-item {{ Request::routeIs('alternatif*') ? 'bg-secondary' : '' }}">
-                    <a class="nav-link d-flex align-items-center {{ Request::routeIs('alternatif*') ? 'text-light' : '' }} gap-2"
+                <li class="nav-item {{ Request::is('alternatif*') ? 'bg-secondary' : '' }}">
+                    <a class="nav-link d-flex align-items-center {{ Request::is('alternatif*') ? 'text-light' : '' }} gap-2"
                         href="{{ route('alternatif.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-card-list" viewBox="0 0 16 16">
@@ -34,8 +34,8 @@
                         Alternatif
                     </a>
                 </li>
-                <li class="nav-item {{ Request::routeIs('kriteria*') ? 'bg-secondary' : '' }}">
-                    <a class="nav-link d-flex align-items-center  {{ Request::routeIs('kriteria*') ? 'text-light' : '' }} gap-2"
+                <li class="nav-item {{ Request::is('kriteria*') ? 'bg-secondary' : '' }}">
+                    <a class="nav-link d-flex align-items-center  {{ Request::is('kriteria*') ? 'text-light' : '' }} gap-2"
                         href="{{ route('kriteria.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-list-task" viewBox="0 0 16 16">
@@ -73,7 +73,7 @@
                         Perhitungan Perangkingan
                     </a>
                 </li> --}}
-                <li class="nav-item">
+                {{-- <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2" href="#">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-person-lines-fill" viewBox="0 0 16 16">
@@ -82,7 +82,7 @@
                         </svg>
                         Akun
                     </a>
-                </li>
+                </li> --}}
             </ul>
         </div>
     </div>
