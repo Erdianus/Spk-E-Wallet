@@ -22,12 +22,17 @@ class AuthenticationController extends Controller
 
     public function register(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string',
             'username' => 'required|string|min:6|unique:users',
             'password' => 'required|string|min:6|confirmed',
             'password_confirmation' => 'required|string|min:6',
         ]);
+
+        if ($validator->fails()) {
+            return back()->with('error', $validator->messages());
+        }
+
         DB::beginTransaction();
         try {
             User::create([
@@ -36,9 +41,10 @@ class AuthenticationController extends Controller
                 'password' => Hash::make($request->password),
             ]);
             DB::commit();
-            return redirect()->route('form-login')->with('success', 'Registration Successful');
+            return redirect()->route('form-login')->with('success', 'Registration Successful, Silahkan login ke akun anda');
         } catch (\Throwable $e) {
             DB::rollBack();
+            return back()->with('error', 'Registration Unsuccessful');
         }
     }
 
@@ -53,7 +59,6 @@ class AuthenticationController extends Controller
         if (Auth::attempt($credentials)) {
             return redirect()->intended('dashboard');
         }
-
         return redirect()->route('form-login')->with('error', 'Username atau Password Anda salah');
     }
 

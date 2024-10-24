@@ -74,3 +74,12 @@
 .bd-mode-toggle .dropdown-menu .active .bi {
     display: block !important;
 }
+
+#helpButton {
+    width: 100px;
+    height: 100px;
+    font-size: 18px;
+    line-height: 1.5;
+    text-align: center;
+    /* padding: 10px; */
+}

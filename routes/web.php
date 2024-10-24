@@ -22,6 +22,8 @@ use App\Http\Controllers\DashboardController;
 */
 
 Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
+Route::post('/nilai-perbandingan', [LandingPageController::class, 'perhitunganSPK'])->name('nilai-perbandingan');
+Route::get('/hasil-pemeringkatan/{responden}', [LandingPageController::class, 'hasilPerangkinganSPK'])->name('hasil-perangkingan');
 Route::get('/form-login', [AuthenticationController::class, 'formLogin'])->name('form-login');
 Route::get('/form-register', [AuthenticationController::class, 'formRegister'])->name('form-register');
 Route::post('/login', [AuthenticationController::class, 'login'])->name('login');

@@ -9,7 +9,7 @@
         <div class="offcanvas-body d-md-flex flex-column p-0 pt-lg-3 overflow-y-auto">
             <ul class="nav flex-column">
                 <li class="nav-item {{ Request::routeIs('dashboard') ? 'bg-secondary' : '' }} ">
-                    <a class="nav-link d-flex align-items-center {{ Request::routeIs('dashboard') ? 'text-light' : '' }}  gap-2"
+                    <a class="nav-link d-flex align-items-center {{ Request::routeIs('dashboard') ? 'text-light' : '' }}  gap-2 fs-4"
                         aria-current="page" href="{{ route('dashboard') }}"">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-menu-button-wide" viewBox="0 0 16 15">
@@ -22,7 +22,7 @@
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('alternatif*') ? 'bg-secondary' : '' }}">
-                    <a class="nav-link d-flex align-items-center {{ Request::is('alternatif*') ? 'text-light' : '' }} gap-2"
+                    <a class="nav-link d-flex align-items-center {{ Request::is('alternatif*') ? 'text-light' : '' }} gap-2 fs-4"
                         href="{{ route('alternatif.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-card-list" viewBox="0 0 16 16">
@@ -35,7 +35,7 @@
                     </a>
                 </li>
                 <li class="nav-item {{ Request::is('kriteria*') ? 'bg-secondary' : '' }}">
-                    <a class="nav-link d-flex align-items-center  {{ Request::is('kriteria*') ? 'text-light' : '' }} gap-2"
+                    <a class="nav-link d-flex align-items-center  {{ Request::is('kriteria*') ? 'text-light' : '' }} gap-2 fs-4"
                         href="{{ route('kriteria.index') }}">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-list-task" viewBox="0 0 16 16">

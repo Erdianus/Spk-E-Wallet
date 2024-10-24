@@ -22,6 +22,7 @@ class AlternativeController extends Controller
         $request->validate([
             'name' => 'required|string',
         ]);
+
         DB::beginTransaction();
         try {
             Alternative::create([
@@ -35,7 +36,7 @@ class AlternativeController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             return response()->json([
-                'message' => 'Alternatif Gagal Dibuat' . $e,
+                'message' => 'Alternatif Gagal Dibuat ' . $e->getMessage(),
                 'status' => false
             ], 400);
         }

@@ -9,11 +9,11 @@ class PerbandinganKriteria extends Model
 {
     use HasFactory;
 
-    protected $table = 'perbandingan_criteria';
+    protected $table = 'perbandingan_kriterias';
     protected $fillable = [
-        'criteria1_id',
-        'criteria2_id',
-        'for_criteria',
-        'weight',
+        'criteria_baris_id',
+        'criteria_kolom_id',
+        'responden_id',
+        'nilai',
     ];
 }

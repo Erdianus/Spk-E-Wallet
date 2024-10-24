@@ -40,10 +40,10 @@
                                 <button id="buttonEdit" type="button" data-bs-toggle="modal" data-bs-target="#editForm"
                                     class="btn btn-warning" data-id="{{ $item->id }}"
                                     data-name="{{ $item->name }}">Edit</button>
-                                {{-- <button id="button-delete-{{ $item->id }}"
+                                <button id="button-delete-{{ $item->id }}"
                                     data-route="{{ route('alternatif.delete', $item->id) }}"
                                     onclick="delete_data({{ $item->id }})" type="button"
-                                    class="btn btn-danger">Delete</button> --}}
+                                    class="btn btn-danger">Delete</button>
                                 @if ($item->criteria()->exists())
                                     <button id="buttonUpdateData" type="button" data-bs-toggle="modal"
                                         data-bs-target="#updateDataForm"

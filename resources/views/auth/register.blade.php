@@ -33,33 +33,36 @@
     <div class="container-fluid text-center">
         <main class="form-signin">
             <h1 class="h2 mb-3 fw-bold">Register</h1>
-            @if ($errors->any())
-                <div class="alert alert-danger alert-dismissible fade show">
-                    <ul>
-                        @foreach ($errors->all() as $error)
+            @if (session('error'))
+                <div class="my-3 alert alert-danger alert-dismissible fade show" role="alert">
+                    <ul class="mb-0 list-unstyled">
+                        @foreach (session('error')->all() as $error)
                             <li>{{ $error }}</li>
                         @endforeach
                     </ul>
                     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
                 </div>
             @endif
-            <form action="{{ route('register') }}" method="POST">
+            <form action="{{ route('register') }}" id="register" method="POST">
                 @csrf
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Nama"
+                        required>
                     <label for="name">Name</label>
                 </div>
                 <div class="form-floating">
-                    <input type="text" class="form-control" id="username" placeholder="Username" name="username">
+                    <input type="text" class="form-control" id="username" placeholder="Username" name="username"
+                        required>
                     <label for="username">Username</label>
                 </div>
                 <div class="form-floating">
-                    <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password"
+                        required>
                     <label for="password">Password</label>
                 </div>
                 <div class="form-floating">
                     <input type="password" class="form-control" id="password_confirmation" name="password_confirmation"
-                        placeholder="Confirm Password">
+                        placeholder="Confirm Password" required>
                     <label for="password_confirmation">Confirm Password</label>
                 </div>
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Register</button>
@@ -71,6 +74,7 @@
         </main>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script></script>
 </body>
 
 </html>
