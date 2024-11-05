@@ -57,9 +57,9 @@
                     <label for="password">Password</label>
                 </div>
                 <button class="w-100 btn btn-lg btn-primary" type="submit">Sign in</button>
-                <div class="mt-4">
+                {{-- <div class="mt-4">
                     <a href="{{ route('form-register') }}">Register</a>
-                </div>
+                </div> --}}
                 <p class="mt-5 mb-3 text-muted">&copy;Erdianus Pagesong 2024</p>
             </form>
         </main>

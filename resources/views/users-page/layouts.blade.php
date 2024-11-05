@@ -9,7 +9,9 @@
     <link href="{{ asset('css/datatables.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    @yield('head')
     <title>@yield('title')</title>
+    @yield('style')
 </head>
 
 <body>
@@ -27,11 +29,7 @@
             </div>
         </div>
         @yield('alert')
-        <div class="row">
-            <span class="badge bg-warning text-dark">
-                <h5>@yield('description')</h5>
-            </span>
-        </div>
+        @yield('description')
         <div class="row mt-3">
             @yield('content')
         </div>

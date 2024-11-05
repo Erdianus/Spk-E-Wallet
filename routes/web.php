@@ -3,12 +3,13 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\BobotController;
 use App\Http\Controllers\CriteriaController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\RespondenController;
 use App\Http\Controllers\AlternativeController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\PerhitunganController;
 use App\Http\Controllers\SubCriteriaController;
 use App\Http\Controllers\AuthenticationController;
-use App\Http\Controllers\DashboardController;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +52,11 @@ Route::middleware('auth')->group(function () {
             Route::put('/update', [SubCriteriaController::class, 'update',])->name('sub-kriteria.update');
             Route::delete('/delete/{id}', [SubCriteriaController::class, 'destroy'])->name('sub-kriteria.delete');
         });
+    });
+    Route::prefix('responden')->group(function () {
+        Route::get('/index', [RespondenController::class, 'index'])->name('responden.index');
+        Route::get('/hasil/{responden}', [RespondenController::class, 'result'])->name('responden.hasil');
+        Route::delete('/delete/{id}', [RespondenController::class, 'destroy'])->name('responden.delete');
     });
     // Route::get('/pembobotan/AHP', [PerhitunganController::class, 'pembobotanIndex'])->name('pembobotan.index');
     // Route::get('/pembobotan/check-konsistensi', [PerhitunganController::class, 'checkConsistency'])->name('pembobotan.check');

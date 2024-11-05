@@ -16,4 +16,9 @@ class PerbandinganKriteria extends Model
         'responden_id',
         'nilai',
     ];
+
+    public function responden()
+    {
+        return $this->belongsTo(Respondent::class, 'responden_id', 'id');
+    }
 }

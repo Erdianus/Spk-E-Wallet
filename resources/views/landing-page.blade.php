@@ -14,8 +14,12 @@
     Welcome to SPK E-Wallet
 @endsection
 @section('description')
-    Silahkan input nilai perbandingan anda berdasarkan kriteria yan
-    tersedia dibawah ini!
+    <div class="row">
+        <span class="badge bg-warning text-dark">
+            <h5>Silahkan input nilai perbandingan anda berdasarkan kriteria yan
+                tersedia dibawah ini!</h5>
+        </span>
+    </div>
 @endsection
 @section('content')
     {{-- Input Perbandingan --}}
