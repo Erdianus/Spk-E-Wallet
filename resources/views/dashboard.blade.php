@@ -22,7 +22,14 @@
                 </div>
             </div>
         </div>
-        <x-notify::notify />
-        @notifyJs
+        <div class="col-lg-4 col-md-6 col-sm-9">
+            <div class="card text-white bg-secondary">
+                <div class="card-body">
+                    <h5 class="card-title fs-4">Responden</h5>
+                    <h2 class="card-text mx-2 my-3">{{ $totalRespondens }}</h2>
+                    <a href="{{ route('responden.index') }}" class="btn btn-light">Lihat Data</a>
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

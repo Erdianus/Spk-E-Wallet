@@ -171,11 +171,6 @@
                         <p>Langkah selanjutnya menghitung bobot kriteria dengan mencari rata-rata dari setiap baris di
                             matriks normalisasi:</p>
                         <p class="formula">\[ \text{Bobot}_i = \frac{\sum_{j=1}^n N_{ij}}{n} \]</p>
-                        @foreach ($criterias as $baris => $criteria)
-                            <p class="formula">\[ \\{{ $criteria->code }} =
-                                \frac{\\{{ $totalPerRowTableNormalisasi[$baris] }}}{\\{{ $criteria->count() }}} =
-                                \text{{ $bobotKriteria[$baris] }} \]</p>
-                        @endforeach
                         <h2>Tabel Bobot Kriteria</h2>
                         <table class="table table-bordered table-hover text-center">
                             <tr>
@@ -246,10 +241,18 @@
                                     @endforeach
                                 </tr>
                             @endforeach
+                            <tr class="table-secondary">
+                                <th>Tipe Kriteria</th>
+                                @foreach ($criterias as $criteria)
+                                    <td>{{ $criteria->type_of_criteria }}</td>
+                                @endforeach
+                            </tr>
                         </table>
                     </div>
                     <div class="row my-4">
                         <h2>Normalisasi Matrix Keputusan</h2>
+                        <p>Pada tahap ini melakukan normalisasi nilai alternatif berdasarkan tipe kriterianya masing-masing:
+                        </p>
                         <p>Untuk kriteria keuntungan (benefit):</p>
                         <p class="formula">\[ r_{ij} = \frac{x_{ij}}{\text{max}_{i}(x_{ij})} \]</p>
                         <p>Untuk kriteria biaya (cost):</p>
@@ -272,7 +275,9 @@
                         </table>
                     </div>
                     <div class="row my-4">
-                        <h2>Hasil Perangkingan</h2>
+                        <h2>Menghitung nilai Qi</h2>
+                        <p>Setelah melakukan normalisasi selanjutnya menentukan nilai Qi dari setiap alternatif menggunakan
+                            rumus seperti dibawah ini:</p>
                         <p class="formula">\[
                             Q_i = 0.5 \sum_{i=0}^n X_{ij} W + 0.5 \prod_{j=1}^n (X_{ij})^{W_j}
                             \]</p>
@@ -281,6 +286,7 @@
                         <p>\( Q_i \) = Nilai dari Q ke-i</p>
                         <p>\( X_{ij} W \) = Perkalian nilai \( X_{ij} \) dengan bobot (W)</p>
                         <p>\( 0.5 \) = Ketetapan</p>
+                        <h2>Hasil perangkingan alternatif berdasarkan nilai Qi dari tiap alternatif</h2>
                         <table class="table table-bordered table-hover text-center">
                             <tr>
                                 <th scope="col">No</th>

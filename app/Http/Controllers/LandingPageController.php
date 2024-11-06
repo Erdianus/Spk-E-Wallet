@@ -135,65 +135,18 @@ class LandingPageController extends Controller
                 ]);
             }
         }
-        return redirect()->route('hasil-perangkingan', $responden->id);
-
-
-        /////////////////////Perangkingan Menggunakan Metode Waspas//////////////////////////////////
-
-        ///////////////////////////Normalisasi Matrix Keputusan///////////////////////////// 
-        $matrixKeputusanNormalisasi = [];
-        foreach ($alternatives as $row => $alternative) {
-            foreach ($alternative->criteria as $column => $criteria) {
-                // dd($criteria->criteria_value->value);
-                $maxValue = max($alternativeValue[$column]);
-                $minValue = min($alternativeValue[$column]);
-                if ($criteria->type_of_criteria == 'Benefit') {
-                    $result = $criteria->criteria_value->value / $maxValue;
-                } elseif ($criteria->type_of_criteria == 'Cost  ') {
-                    $result = $minValue / $criteria->criteria_value->value;
-                }
-                $matrixKeputusanNormalisasi[$column][$row] = $result;
-            }
-        }
-
-        //Perhitungan Nilai Qi
-        $qiValue = [];
-        $finalResult = [];
-        foreach ($alternatives as $row => $alternative) {
-            $perkalian = [];
-            $perpangkatan = [];
-            foreach ($criterias as $column => $criteria) {
-                // dd($criteria);
-                $perkalian[$column] =
-                    $matrixKeputusanNormalisasi[$column][$row] * $bobotKriteria[$criteria->code];
-                $perpangkatan[$column] =
-                    $matrixKeputusanNormalisasi[$column][$row] ^ $bobotKriteria[$criteria->code];
-            }
-            $totalRowPerkalian = array_sum($perkalian);
-            $totalRowPerpangkatan = array_sum($perpangkatan);
-            $qiValue[$row] = 0.5 * $totalRowPerkalian + 0.5 * $totalRowPerpangkatan;
-            $finalResult[$row]['qi'] = $qiValue[$row];
-            $finalResult[$row]['name'] = $alternative->name;
-        }
-        $hasilPerangkingan = collect($finalResult)->sortByDesc('qi');
-        // dd($hasilPerangkingan)
-        DB::commit();
         return redirect()->route('hasil-perangkingan', $responden->slug);
-        // } catch (\Throwable $e) {
-        //     $failed = 'Sepertinya ada yang salah';
-        //     DB::rollBack();
-        //     return redirect()->back()->with('error', $e->getMessage());
-        // }
     }
 
     public function hasilPerangkinganSPK(Respondent $responden)
     {
-        // dd($responden);
         $alternatives = Alternative::get();
         $criterias = Criteria::get();
         $perbandinganKriteria = PerbandinganKriteria::where('responden_id', $responden->id)->get();
         $tablePerbandinganKriteria = [];
         $totalPerKolomTablePerbandingan = [];
+
+
         //////////////////////Perbandingan Kriteria///////////////////////
         foreach ($criterias as $baris => $criteria) {
             foreach ($criterias as $kolom => $criteria2) {
@@ -233,8 +186,6 @@ class LandingPageController extends Controller
                 $totalPerRowTableNormalisasi[$baris] = round($totalPerRowTableNormalisasi[$baris] + $value, 4);
             }
         }
-
-
 
         ///////////////////////////////Mencari Bobot Kriteria////////////////////////////////////////
         $bobotKriteria = [];
