@@ -12,6 +12,11 @@ use App\Models\PerbandinganKriteria;
 
 class LandingPageController extends Controller
 {
+    public function startPage()
+    {
+        return view('start-page');
+    }
+
     public function index()
     {
         $alternatives = Alternative::get();
@@ -238,19 +243,20 @@ class LandingPageController extends Controller
             $perkalian = [];
             $perpangkatan = [];
             foreach ($criterias as $column => $criteria) {
-                // dd($criteria);
                 $perkalian[$column] =
                     $matrixKeputusanNormalisasi[$column][$row] * $bobotKriteria[$column];
                 $perpangkatan[$column] =
-                    $matrixKeputusanNormalisasi[$column][$row] ^ $bobotKriteria[$column];
+                    round(pow($matrixKeputusanNormalisasi[$column][$row], $bobotKriteria[$column]), 3);
             }
+            // dd($perpangkatan);
             $totalPenjumlahanRowPerkalian = array_sum($perkalian);
-            $totalPerkalianRowPerpangkatan = 0;
+            $totalPerkalianRowPerpangkatan = 1;
             foreach ($perpangkatan as $value) {
-                $totalPerkalianRowPerpangkatan = $totalPerkalianRowPerpangkatan * $value;
+                $totalPerkalianRowPerpangkatan *= $value;
             }
-            $qiValue[$row] = 0.5 * $totalPenjumlahanRowPerkalian + 0.5 * $totalPerkalianRowPerpangkatan;
-            $finalResult[$row]['qi'] = $qiValue[$row];
+            // dd(0.5 * array_sum($perkalian));
+            $qiValue[$row] = (0.5 * $totalPenjumlahanRowPerkalian) + (0.5 * $totalPerkalianRowPerpangkatan);
+            $finalResult[$row]['qi'] = round($qiValue[$row], 4);
             $finalResult[$row]['name'] = $alternative->name;
         }
 

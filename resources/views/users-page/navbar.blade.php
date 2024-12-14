@@ -1,6 +1,6 @@
 <nav class="navbar bg-success p-0">
     <div class="container-fluid">
-        <a class="navbar-brand text-white py-3 px-4" href="{{ route('landing-page') }}">SPK E-Wallet</a>
+        <a class="navbar-brand text-white py-3 px-4" href="{{ route('start-page') }}">SPK E-Wallet</a>
         <ul class="flex-row list-inline mb-0">
             <li class="nav-item list-inline-item text-nowrap d-md-none">
                 <button class="nav-link px-3 text-white" type="button" data-bs-toggle="offcanvas"

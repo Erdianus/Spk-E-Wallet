@@ -13,6 +13,7 @@ class Criteria extends Model
         'code',
         'name',
         'type_of_criteria',
+        'decimal_value',
     ];
 
     public function subCriteria()

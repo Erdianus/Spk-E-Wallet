@@ -9,6 +9,7 @@
     <title>
         @yield('title')
     </title>
+    <link rel="icon" type="image/webp" href="{{ asset('img/e-wallet.webp') }}">
     <link href="{{ asset('css/dashboard.css') }}" rel="stylesheet">
     <link href="{{ asset('css/datatables.css') }}" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.datatables.net/2.0.2/css/dataTables.dataTables.css" />

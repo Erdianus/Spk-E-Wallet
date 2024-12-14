@@ -205,8 +205,13 @@
 
             if (singleAlternatif) {
                 singleAlternatif.criteria.forEach(element => {
-                    $(`#updateData${element.code} option[value='${element.criteria_value.value}']`).prop(
-                        'selected', true)
+                    if (element.decimal_value) {
+                        $(`#updateData${element.code}`).val(element.criteria_value.value);
+                    } else {
+                        $(`#updateData${element.code} option[value='${element.criteria_value.value}']`)
+                            .prop(
+                                'selected', true)
+                    }
                 });
             }
         })

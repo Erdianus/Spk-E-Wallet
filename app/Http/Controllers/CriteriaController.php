@@ -29,6 +29,7 @@ class CriteriaController extends Controller
             'name' => 'required|string',
             'code' => 'required|string|unique:criterias,code',
             'type_of_criteria' => 'required|string',
+            'isDecimal' => 'required|boolean',
         ]);
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors(), 'status' => false], 400);
@@ -39,6 +40,7 @@ class CriteriaController extends Controller
                 'name' => $request->name,
                 'code' => $request->code,
                 'type_of_criteria' => $request->type_of_criteria,
+                'decimal_value' => $request->isDecimal,
             ]);
             DB::commit();
             return response()->json([
@@ -62,6 +64,7 @@ class CriteriaController extends Controller
             'name' => 'required|string',
             'code' => 'required|string|unique:criterias,code,' . $request->id,
             'type_of_criteria' => 'required|string',
+            'isDecimal' => 'required|boolean',
         ]);
         if ($validator->fails()) {
             return response()->json(['message' => $validator->errors(), 'status' => false], 200);
@@ -73,6 +76,7 @@ class CriteriaController extends Controller
                 'code' => $request->code,
                 'name' => $request->name,
                 'type_of_criteria' => $request->type_of_criteria,
+                'decimal_value' => $request->isDecimal,
             ]);
             DB::commit();
             return response()->json([

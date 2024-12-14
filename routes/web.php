@@ -22,7 +22,8 @@ use App\Http\Controllers\AuthenticationController;
 |
 */
 
-Route::get('/', [LandingPageController::class, 'index'])->name('landing-page');
+Route::get('/', [LandingPageController::class, 'startPage'])->name('start-page');
+Route::get('/input-perbandingan', [LandingPageController::class, 'index'])->name('perbandingan-page');
 Route::post('/nilai-perbandingan', [LandingPageController::class, 'perhitunganSPK'])->name('nilai-perbandingan');
 Route::get('/hasil-pemeringkatan/{responden}', [LandingPageController::class, 'hasilPerangkinganSPK'])->name('hasil-perangkingan');
 Route::get('/form-login', [AuthenticationController::class, 'formLogin'])->name('form-login');

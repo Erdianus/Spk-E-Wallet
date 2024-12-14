@@ -26,6 +26,14 @@
                              <option value="Cost">Cost</option>
                          </select>
                      </div>
+                     <div class="mb-3">
+                         <label for="isDecimal" class="form-label">Jenis Nilai</label>
+                         <select class="form-select" id="isDecimal" name="isDecimal" required>
+                             <option value="">Pilih..</option>
+                             <option value="1">Desimal</option>
+                             <option value="0">Bukan Desimal</option>
+                         </select>
+                     </div>
                  </div>
                  <div class="modal-footer">
                      <button type="submit" class="btn btn-primary">Create</button>
@@ -62,6 +70,14 @@
                              <option value="">Pilih...</option>
                              <option value="Benefit">Benefit</option>
                              <option value="Cost">Cost</option>
+                         </select>
+                     </div>
+                     <div class="mb-3">
+                         <label for="updateIsDecimal" class="form-label">Jenis Nilai</label>
+                         <select class="form-select" id="updateIsDecimal" name="isDecimal" required>
+                             <option value="">Pilih...</option>
+                             <option value="1">Desimal</option>
+                             <option value="0">Bukan Desimal</option>
                          </select>
                      </div>
                  </div>

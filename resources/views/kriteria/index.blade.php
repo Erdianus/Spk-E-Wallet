@@ -45,14 +45,17 @@
                             <td>
                                 <button id="buttonEdit" type="button" data-bs-toggle="modal" data-bs-target="#editForm"
                                     class="btn btn-warning" data-id="{{ $item->id }}" data-code="{{ $item->code }}"
-                                    data-name="{{ $item->name }}" data-type="{{ $item->type_of_criteria }}">Edit</button>
+                                    data-name="{{ $item->name }}" data-type="{{ $item->type_of_criteria }}"
+                                    data-is-decimal = "{{ $item->decimal_value }}">Edit</button>
                                 {{-- <button id="button-delete-{{ $item->id }}"
                                     data-route="{{ route('kriteria.delete', $item->id) }}"
                                     onclick="delete_data({{ $item->id }})" type="button"
                                     class="btn btn-danger">Delete</button> --}}
-                                <a href="{{ route('sub-kriteria.index', $item->id) }}" id="sub-kriteria" type="button"
-                                    class="btn btn-success">Sub
-                                    Kriteria</a>
+                                @if (!$item->decimal_value)
+                                    <a href="{{ route('sub-kriteria.index', $item->id) }}" id="sub-kriteria" type="button"
+                                        class="btn btn-success">Sub
+                                        Kriteria</a>
+                                @endif
                             </td>
                         </tr>
                     @endforeach
@@ -108,6 +111,8 @@
             $('#updateName').val($(this).data('name'));
             $('#updateCode').val($(this).data('code'));
             $('#updateType').val($(this).data('type'));
+            $('#updateIsDecimal').val($(this).data('is-decimal'));
+
         })
 
         $('#updateKriteria').on('submit', function(e) {

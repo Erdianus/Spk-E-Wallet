@@ -11,7 +11,7 @@
     @endif
 @endsection
 @section('header-title')
-    Welcome to SPK E-Wallet
+    Perbandingan Kriteria SPK E-Wallet
 @endsection
 @section('description')
     <div class="row">
@@ -31,7 +31,7 @@
                     <input class="form-control" type="text" name="responden" id="responden" placeholder="Nama Responden"
                         required>
                 </div>
-                <div class="p-3 table-responsive p-2 d-flex justify-content-center">
+                <div class="p-3 table-responsive d-flex justify-content-center">
                     <table class="table table-bordered text-center">
 
                         <thead>
@@ -143,7 +143,7 @@
                 </div>
                 <div class="text-center mt-2 mb-5">
                     <button class="btn btn-success" type="submit">Lihat Hasil</button>
-                    <a href="{{ route('landing-page') }}" class="btn btn-primary" type="button">Reload</a>
+                    <a href="{{ route('perbandingan-page') }}" class="btn btn-primary" type="button">Reload</a>
                 </div>
             </form>
         </div>
